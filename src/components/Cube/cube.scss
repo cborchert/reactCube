@@ -1,0 +1,197 @@
+$size: 40px;
+// $yellow: yellow;
+// $blue: blue;
+// $red: red;
+// $orange: orange;
+// $green: green;
+// $white: white;
+$yellow: yellow;
+$blue: #70a1ff;
+$red: #ff6b81;
+$orange: #ff7f50;
+$green: #7bed9f;
+$white: white;
+$gray: gray;
+$transparent: transparent;
+
+.scene {
+  width: 100vw;
+  height: 100vh;
+  perspective: $size * 50;
+  overflow: hidden;
+  border: 2px solid red;
+
+  &,
+  & div {
+    box-sizing: border-box;
+    transform-style: preserve-3d;
+  }
+}
+
+.pivot {
+  transform: rotateX(-20deg) rotateY(20deg);
+  width: 100%;
+  height: 100%;
+  position: relative;
+  //demo only: planes and points
+  // background: rgba(0, 0, 255, 0.5);
+  // centered dot
+  &:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    content: " ";
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 20px;
+  }
+  // demo only
+  // animation: rotate 30s infinite linear;
+  // transform-origin: center;
+}
+
+.cube {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-0.5 * $size) translateY(-0.5 * $size);
+  width: $size * 3;
+  height: $size * 3;
+}
+
+.block {
+  font-size: $size;
+  width: 1em;
+  height: 1em;
+  position: absolute;
+  transition: 500ms;
+  $n: 0;
+
+  // @for $y from -1 through 1 {
+  //   @for $z from -1 through 1 {
+  //     @for $x from -1 through 1 {
+  //       $n: $n + 1;
+  //       &:nth-child(#{$n}) {
+  //         transform: translateZ(1em * $z)
+  //           translateX(1em * $x)
+  //           translateY(1em * $y);
+  //       }
+  //     }
+  //   }
+  // }
+}
+
+.block__face {
+  position: absolute;
+  width: $size;
+  height: $size;
+  background: #333;
+  box-shadow: 0 0 2px #333;
+  display: none;
+  opacity: 1;
+
+  .block__face__sticker {
+    border-radius: 4px;
+    box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.5);
+  }
+
+  &.block__face--F {
+    transform: rotateY(0deg) translateZ($size * 0.5);
+  }
+  &.block__face--R {
+    transform: rotateY(90deg) translateZ($size * 0.5);
+  }
+  &.block__face--B {
+    transform: rotateY(180deg) translateZ($size * 0.5);
+  }
+  &.block__face--L {
+    transform: rotateY(-90deg) translateZ($size * 0.5);
+  }
+  &.block__face--U {
+    transform: rotateX(90deg) translateZ($size * 0.5);
+  }
+  &.block__face--D {
+    transform: rotateX(-90deg) translateZ($size * 0.5);
+  }
+
+  &.block__face--yellow {
+    display: block;
+    .block__face__sticker {
+      display: block;
+      background-color: $yellow;
+    }
+  }
+  &.block__face--blue {
+    display: block;
+    .block__face__sticker {
+      display: block;
+      background-color: $blue;
+    }
+  }
+  &.block__face--red {
+    display: block;
+    .block__face__sticker {
+      display: block;
+      background-color: $red;
+    }
+  }
+  &.block__face--orange {
+    display: block;
+    .block__face__sticker {
+      display: block;
+      background-color: $orange;
+    }
+  }
+  &.block__face--green {
+    display: block;
+    .block__face__sticker {
+      display: block;
+      background-color: $green;
+    }
+  }
+  &.block__face--white {
+    display: block;
+    .block__face__sticker {
+      display: block;
+      background-color: $white;
+    }
+  }
+  &.block__face--gray {
+    display: block;
+    .block__face__sticker {
+      display: block;
+      background-color: $gray;
+    }
+  }
+  &.block__face--transparent {
+    display: none;
+    .block__face__sticker {
+      display: none;
+      background-color: $transparent;
+    }
+  }
+}
+
+.block__face__sticker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 90%;
+  height: 90%;
+  border-radius: 3%;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  50% {
+    transform: rotateX(180deg) rotateY(0deg) rotateZ(360deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(0deg) rotateZ(720deg);
+  }
+}
