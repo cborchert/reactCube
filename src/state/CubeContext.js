@@ -120,8 +120,6 @@ function applyRotationAnimationToCube(turnString, blocks) {
   return appliedCube;
 }
 
-let timeout = null;
-
 const CubeContext = React.createContext();
 
 function CubeProvider(props) {
@@ -140,6 +138,7 @@ function CubeProvider(props) {
 
 function useCube() {
   const context = React.useContext(CubeContext);
+  let timeout = React.useRef(null);
   if (!context) {
     throw new Error("useCube must be used within a CubeProvider");
   }
@@ -150,30 +149,37 @@ function useCube() {
     blocks: animatingBlocks ? animatingBlocks : blocks,
     animationSpeed: animatingBlocks ? animationSpeed : 0,
     turnCube: turnString => {
-      if (timeout) {
-        clearTimeout(timeout);
-        timeout = null;
+      if (timeout && timeout.current) {
+        clearTimeout(timeout.current);
+        timeout.current = null;
       }
       setAnimatingBlocks(applyRotationAnimationToCube(turnString, blocks));
       setBlocks(applyTurnToCube(turnString, blocks));
-      timeout = setTimeout(() => {
+      timeout.current = setTimeout(() => {
         setAnimatingBlocks(null);
-        timeout = null;
+        timeout.current = null;
       }, animationSpeed);
     },
     setCubeState: (cubeState, turnString) => {
-      if (timeout) {
-        clearTimeout(timeout);
-        timeout = null;
+      if (timeout && timeout.current) {
+        clearTimeout(timeout.current);
+        timeout.current = null;
       }
       if (turnString) {
         setAnimatingBlocks(applyRotationAnimationToCube(turnString, blocks));
-        timeout = setTimeout(() => {
+        timeout.current = setTimeout(() => {
           setAnimatingBlocks(null);
-          timeout = null;
+          timeout.current = null;
         }, animationSpeed);
       }
       setBlocks(cubeState);
+    },
+    resetCube: () => {
+      if (timeout && timeout.current) {
+        clearTimeout(timeout.current);
+        timeout.current = null;
+      }
+      setBlocks([...DEFAULT_BLOCKS]);
     }
   };
 }

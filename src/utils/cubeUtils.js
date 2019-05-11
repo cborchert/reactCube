@@ -27,185 +27,184 @@ const faceFilters = {
 // URFDLB
 // const BLOCK_COLORS = [
 //   {
-//     faceColors: ["y", "_", "_", "_", "g", "r"]
+//     faceColors: ["w", "_", "_", "_", "b", "r"]
 //   },
 //   {
-//     faceColors: ["y", "_", "_", "_", "_", "r"]
+//     faceColors: ["w", "_", "_", "_", "_", "r"]
 //   },
 //   {
-//     faceColors: ["y", "b", "_", "_", "_", "r"]
-//   },
-
-//   {
-//     faceColors: ["y", "_", "_", "_", "g", "_"]
-//   },
-//   {
-//     faceColors: ["y", "_", "_", "_", "_", "_"]
-//   },
-//   {
-//     faceColors: ["y", "b", "_", "_", "_", "_"]
+//     faceColors: ["w", "g", "_", "_", "_", "r"]
 //   },
 
 //   {
-//     faceColors: ["y", "_", "o", "_", "g", "_"]
+//     faceColors: ["w", "_", "_", "_", "b", "_"]
 //   },
 //   {
-//     faceColors: ["y", "_", "o", "_", "_", "_"]
+//     faceColors: ["w", "_", "_", "_", "_", "_"]
 //   },
 //   {
-//     faceColors: ["y", "b", "o", "_", "_", "_"]
+//     faceColors: ["w", "g", "_", "_", "_", "_"]
 //   },
 
 //   {
-//     faceColors: ["_", "_", "_", "_", "g", "r"]
+//     faceColors: ["w", "_", "o", "_", "b", "_"]
+//   },
+//   {
+//     faceColors: ["w", "_", "o", "_", "_", "_"]
+//   },
+//   {
+//     faceColors: ["w", "g", "o", "_", "_", "_"]
+//   },
+
+//   {
+//     faceColors: ["_", "_", "_", "_", "b", "r"]
 //   },
 //   {
 //     faceColors: ["_", "_", "_", "_", "_", "r"]
 //   },
 //   {
-//     faceColors: ["_", "b", "_", "_", "_", "r"]
+//     faceColors: ["_", "g", "_", "_", "_", "r"]
 //   },
 
 //   {
-//     faceColors: ["_", "_", "_", "_", "g", "_"]
+//     faceColors: ["_", "_", "_", "_", "b", "_"]
 //   },
 //   {
 //     faceColors: ["_", "_", "_", "_", "_", "_"]
 //   },
 //   {
-//     faceColors: ["_", "b", "_", "_", "_", "_"]
+//     faceColors: ["_", "g", "_", "_", "_", "_"]
 //   },
 
 //   {
-//     faceColors: ["_", "_", "o", "_", "g", "_"]
+//     faceColors: ["_", "_", "o", "_", "b", "_"]
 //   },
 //   {
 //     faceColors: ["_", "_", "o", "_", "_", "_"]
 //   },
 //   {
-//     faceColors: ["_", "b", "o", "_", "_", "_"]
+//     faceColors: ["_", "g", "o", "_", "_", "_"]
 //   },
 
 //   {
-//     faceColors: ["_", "_", "_", "w", "g", "r"]
+//     faceColors: ["_", "_", "_", "y", "b", "r"]
 //   },
 //   {
-//     faceColors: ["_", "_", "_", "w", "_", "r"]
+//     faceColors: ["_", "_", "_", "y", "_", "r"]
 //   },
 //   {
-//     faceColors: ["_", "b", "_", "w", "_", "r"]
-//   },
-
-//   {
-//     faceColors: ["_", "_", "_", "w", "g", "_"]
-//   },
-//   {
-//     faceColors: ["_", "_", "_", "w", "_", "_"]
-//   },
-//   {
-//     faceColors: ["_", "b", "_", "w", "_", "_"]
+//     faceColors: ["_", "g", "_", "y", "_", "r"]
 //   },
 
 //   {
-//     faceColors: ["_", "_", "o", "w", "g", "_"]
+//     faceColors: ["_", "_", "_", "y", "b", "_"]
 //   },
 //   {
-//     faceColors: ["_", "_", "o", "w", "_", "_"]
+//     faceColors: ["_", "_", "_", "y", "_", "_"]
 //   },
 //   {
-//     faceColors: ["_", "b", "o", "w", "_", "_"]
+//     faceColors: ["_", "g", "_", "y", "_", "_"]
+//   },
+
+//   {
+//     faceColors: ["_", "_", "o", "y", "b", "_"]
+//   },
+//   {
+//     faceColors: ["_", "_", "o", "y", "_", "_"]
+//   },
+//   {
+//     faceColors: ["_", "g", "o", "y", "_", "_"]
 //   }
 // ];
-
 const BLOCK_COLORS = [
   {
-    faceColors: ["w", "_", "_", "_", "b", "r"]
+    faceColors: ["w", "_", "_", "_", "o", "b"]
   },
   {
-    faceColors: ["w", "_", "_", "_", "_", "r"]
+    faceColors: ["w", "_", "_", "_", "_", "b"]
   },
   {
-    faceColors: ["w", "g", "_", "_", "_", "r"]
+    faceColors: ["w", "r", "_", "_", "_", "b"]
   },
 
   {
-    faceColors: ["w", "_", "_", "_", "b", "_"]
+    faceColors: ["w", "_", "_", "_", "o", "_"]
   },
   {
     faceColors: ["w", "_", "_", "_", "_", "_"]
   },
   {
-    faceColors: ["w", "g", "_", "_", "_", "_"]
+    faceColors: ["w", "r", "_", "_", "_", "_"]
   },
 
   {
-    faceColors: ["w", "_", "o", "_", "b", "_"]
+    faceColors: ["w", "_", "g", "_", "o", "_"]
   },
   {
-    faceColors: ["w", "_", "o", "_", "_", "_"]
+    faceColors: ["w", "_", "g", "_", "_", "_"]
   },
   {
-    faceColors: ["w", "g", "o", "_", "_", "_"]
-  },
-
-  {
-    faceColors: ["_", "_", "_", "_", "b", "r"]
-  },
-  {
-    faceColors: ["_", "_", "_", "_", "_", "r"]
-  },
-  {
-    faceColors: ["_", "g", "_", "_", "_", "r"]
+    faceColors: ["w", "r", "g", "_", "_", "_"]
   },
 
   {
-    faceColors: ["_", "_", "_", "_", "b", "_"]
+    faceColors: ["_", "_", "_", "_", "o", "b"]
+  },
+  {
+    faceColors: ["_", "_", "_", "_", "_", "b"]
+  },
+  {
+    faceColors: ["_", "r", "_", "_", "_", "b"]
+  },
+
+  {
+    faceColors: ["_", "_", "_", "_", "o", "_"]
   },
   {
     faceColors: ["_", "_", "_", "_", "_", "_"]
   },
   {
-    faceColors: ["_", "g", "_", "_", "_", "_"]
+    faceColors: ["_", "r", "_", "_", "_", "_"]
   },
 
   {
-    faceColors: ["_", "_", "o", "_", "b", "_"]
+    faceColors: ["_", "_", "g", "_", "o", "_"]
   },
   {
-    faceColors: ["_", "_", "o", "_", "_", "_"]
+    faceColors: ["_", "_", "g", "_", "_", "_"]
   },
   {
-    faceColors: ["_", "g", "o", "_", "_", "_"]
-  },
-
-  {
-    faceColors: ["_", "_", "_", "y", "b", "r"]
-  },
-  {
-    faceColors: ["_", "_", "_", "y", "_", "r"]
-  },
-  {
-    faceColors: ["_", "g", "_", "y", "_", "r"]
+    faceColors: ["_", "r", "g", "_", "_", "_"]
   },
 
   {
-    faceColors: ["_", "_", "_", "y", "b", "_"]
+    faceColors: ["_", "_", "_", "y", "o", "b"]
+  },
+  {
+    faceColors: ["_", "_", "_", "y", "_", "b"]
+  },
+  {
+    faceColors: ["_", "r", "_", "y", "_", "b"]
+  },
+
+  {
+    faceColors: ["_", "_", "_", "y", "o", "_"]
   },
   {
     faceColors: ["_", "_", "_", "y", "_", "_"]
   },
   {
-    faceColors: ["_", "g", "_", "y", "_", "_"]
+    faceColors: ["_", "r", "_", "y", "_", "_"]
   },
 
   {
-    faceColors: ["_", "_", "o", "y", "b", "_"]
+    faceColors: ["_", "_", "g", "y", "o", "_"]
   },
   {
-    faceColors: ["_", "_", "o", "y", "_", "_"]
+    faceColors: ["_", "_", "g", "y", "_", "_"]
   },
   {
-    faceColors: ["_", "g", "o", "y", "_", "_"]
+    faceColors: ["_", "r", "g", "y", "_", "_"]
   }
 ];
 
@@ -278,16 +277,28 @@ const FACE_DETAILS = {
     swapDirection: true,
     axis: "y"
   },
+  // F: {
+  //   swapDirection: true,
+  //   axis: "z"
+  // },
+  // S: {
+  //   swapDirection: false,
+  //   axis: "z"
+  // },
+  // B: {
+  //   swapDirection: false,
+  //   axis: "z"
+  // }
   F: {
-    swapDirection: true,
+    swapDirection: false,
     axis: "z"
   },
   S: {
-    swapDirection: false,
+    swapDirection: true,
     axis: "z"
   },
   B: {
-    swapDirection: false,
+    swapDirection: true,
     axis: "z"
   }
 };
@@ -317,20 +328,28 @@ const BLOCK_MAP = BLOCK_COLORS.map(({ faceColors }) =>
 
 const FACE_TO_COLOR_MAP = {
   U: "w",
-  R: "g",
-  F: "o",
+  // R: "g",
+  R: "r",
+  // F: "o",
+  F: "g",
   D: "y",
-  L: "b",
-  B: "r"
+  // L: "b",
+  L: "o",
+  // B: "r"
+  B: "b"
 };
 
 const COLOR_TO_FACE_MAP = {
   w: "U",
-  g: "R",
-  o: "F",
+  // g: "R",
+  r: "R",
+  // o: "F",
+  g: "F",
   y: "D",
-  b: "L",
-  r: "B"
+  // b: "L",
+  o: "L",
+  // r: "B"
+  b: "B"
 };
 
 //Mapping of our block positions to those used by cube.js

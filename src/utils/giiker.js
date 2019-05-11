@@ -452,4 +452,4 @@ const connect = async () => {
   return giiker;
 };
 
-module.exports = { connect };
+module.exports = { connect, Giiker };

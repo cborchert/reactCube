@@ -1,38 +1,42 @@
 import React from "react";
-import { useGiiker } from "../../state/GiikerContext.js";
 import { useCube } from "../../state/CubeContext.js";
+import { Giiker } from "../../utils/giiker.js";
 import "./giikerController.scss";
 
+const giiker = new Giiker();
+
 const GiikerController = () => {
-  console.count("GiikerController");
-  const { connectGiiker, giikerConnected, giikerCube } = useGiiker();
   const { turnCube } = useCube();
+
+  // keep the most recent instance of turnCube as a ref
+  // otherwise the callback will always be passed a stale version
+  let doTurnCube = React.useRef(turnCube);
+  React.useEffect(() => {
+    doTurnCube.current = turnCube;
+  });
+
+  // set up handle move
   const handleMove = move => {
-    console.log("handlemove");
-    if (!(move && move.notation)) {
-      console.error("no move data");
+    if (
+      !(move && move.notation) ||
+      !doTurnCube ||
+      typeof doTurnCube.current !== "function"
+    ) {
+      // something's not right
+      console.error("something wrong with the move or doTurn");
       return;
     }
-    turnCube(move.notation);
+    console.log(move.notation);
+    doTurnCube.current(move.notation);
   };
 
-  React.useEffect(() => {
-    console.log("useEffect");
-    // if cube is connected, we'll set up a handler for the next movement
-    if (giikerConnected) {
-      console.log("setting handler");
-      //adding teh
-      giikerCube.on("move", handleMove);
-      // before the next update, remove the handler, since it will be stale
-      return () => {
-        console.log("useEffect cleanup");
-        if (giikerCube && giikerCube.off) {
-          console.log("remove handler");
-          giikerCube.off(handleMove);
-        }
-      };
-    }
-  });
+  // set up connection
+  const giikerConnected = !!(giiker && giiker._device);
+  const connectGiiker = async () => {
+    await giiker.connect();
+    giiker.on("move", handleMove);
+  };
+
   return (
     <div className="GiikerControls">
       <div>

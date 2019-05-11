@@ -25,7 +25,7 @@ const MOVES = [
 ];
 
 const Controls = () => {
-  const { turnCube } = useCube();
+  const { turnCube, resetCube } = useCube();
   const { toCenter, stepX, stepY, stepZ } = useScene();
   return (
     <div className="Controls">
@@ -41,6 +41,7 @@ const Controls = () => {
             {move}
           </button>
         ))}
+        <button onClick={resetCube}>resetCube</button>
       </div>
       <div>
         <div>Rotation</div>

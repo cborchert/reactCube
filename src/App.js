@@ -12,11 +12,11 @@ function App() {
     <div className="App">
       <SceneProvider>
         <CubeProvider>
-          <GiikerProvider>
-            <Controls />
-            <GiikerController />
-            <Cube deleteTransparent={true} />
-          </GiikerProvider>
+          {/* <GiikerProvider> */}
+          <Controls />
+          <GiikerController />
+          <Cube deleteTransparent={true} />
+          {/* </GiikerProvider> */}
         </CubeProvider>
       </SceneProvider>
     </div>
