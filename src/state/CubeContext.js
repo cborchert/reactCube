@@ -1,219 +1,11 @@
 import React from "react";
-import { faceFilters } from "../utils/cubeUtils.js";
-
-const TRANSFORMS = {
-  face: {
-    //RUF
-    "+": [6, 3, 0, 7, 4, 1, 8, 5, 2],
-    //LMEDSB
-    "-": [2, 5, 8, 1, 4, 7, 0, 3, 6]
-  },
-  //Reminders: "U", "R", "F", "D", "L", "B"
-  block: {
-    // for turns on the LMR plane
-    x: {
-      //R
-      "+": [5, 1, 0, 2, 4, 3],
-      //LM
-      "-": [2, 1, 3, 5, 4, 0]
-    },
-    // for turns on the UED plane
-    y: {
-      //U
-      "+": [0, 5, 1, 3, 2, 4],
-      //ED
-      "-": [0, 2, 4, 3, 5, 1]
-    },
-    // for turns on the FSB plane
-    z: {
-      //F
-      "+": [4, 0, 2, 1, 3, 5],
-      //SB
-      "-": [1, 3, 2, 4, 0, 5]
-    }
-  }
-};
-
-const FACE_DETAILS = {
-  R: {
-    swapDirection: true,
-    axis: "x"
-  },
-  L: {
-    swapDirection: false,
-    axis: "x"
-  },
-  M: {
-    swapDirection: false,
-    axis: "x"
-  },
-  U: {
-    swapDirection: false,
-    axis: "y"
-  },
-  E: {
-    swapDirection: true,
-    axis: "y"
-  },
-  D: {
-    swapDirection: true,
-    axis: "y"
-  },
-  // F: {
-  //   swapDirection: false,
-  //   axis: "z"
-  // },
-  // S: {
-  //   swapDirection: true,
-  //   axis: "z"
-  // },
-  // B: {
-  //   swapDirection: true,
-  //   axis: "z"
-  // }
-  F: {
-    swapDirection: true,
-    axis: "z"
-  },
-  S: {
-    swapDirection: false,
-    axis: "z"
-  },
-  B: {
-    swapDirection: false,
-    axis: "z"
-  }
-};
-
-const BLOCK_COLORS = [
-  {
-    faceColors: ["y", "_", "_", "_", "g", "r"]
-  },
-  {
-    faceColors: ["y", "_", "_", "_", "_", "r"]
-  },
-  {
-    faceColors: ["y", "b", "_", "_", "_", "r"]
-  },
-
-  {
-    faceColors: ["y", "_", "_", "_", "g", "_"]
-  },
-  {
-    faceColors: ["y", "_", "_", "_", "_", "_"]
-  },
-  {
-    faceColors: ["y", "b", "_", "_", "_", "_"]
-  },
-
-  {
-    faceColors: ["y", "_", "o", "_", "g", "_"]
-  },
-  {
-    faceColors: ["y", "_", "o", "_", "_", "_"]
-  },
-  {
-    faceColors: ["y", "b", "o", "_", "_", "_"]
-  },
-
-  {
-    faceColors: ["_", "_", "_", "_", "g", "r"]
-  },
-  {
-    faceColors: ["_", "_", "_", "_", "_", "r"]
-  },
-  {
-    faceColors: ["_", "b", "_", "_", "_", "r"]
-  },
-
-  {
-    faceColors: ["_", "_", "_", "_", "g", "_"]
-  },
-  {
-    faceColors: ["_", "_", "_", "_", "_", "_"]
-  },
-  {
-    faceColors: ["_", "b", "_", "_", "_", "_"]
-  },
-
-  {
-    faceColors: ["_", "_", "o", "_", "g", "_"]
-  },
-  {
-    faceColors: ["_", "_", "o", "_", "_", "_"]
-  },
-  {
-    faceColors: ["_", "b", "o", "_", "_", "_"]
-  },
-
-  {
-    faceColors: ["_", "_", "_", "w", "g", "r"]
-  },
-  {
-    faceColors: ["_", "_", "_", "w", "_", "r"]
-  },
-  {
-    faceColors: ["_", "b", "_", "w", "_", "r"]
-  },
-
-  {
-    faceColors: ["_", "_", "_", "w", "g", "_"]
-  },
-  {
-    faceColors: ["_", "_", "_", "w", "_", "_"]
-  },
-  {
-    faceColors: ["_", "b", "_", "w", "_", "_"]
-  },
-
-  {
-    faceColors: ["_", "_", "o", "w", "g", "_"]
-  },
-  {
-    faceColors: ["_", "_", "o", "w", "_", "_"]
-  },
-  {
-    faceColors: ["_", "b", "o", "w", "_", "_"]
-  }
-];
-
-let baseTransforms = [];
-for (let y = -1; y <= 1; y++) {
-  for (let z = -1; z <= 1; z++) {
-    for (let x = -1; x <= 1; x++) {
-      baseTransforms.push(
-        `translateZ(${z}em) translateX(${x}em) translateY(${y}em)`
-      );
-    }
-  }
-}
-
-const BLOCKS = BLOCK_COLORS.map((blockColors, i) => {
-  return {
-    ...blockColors,
-    initialPosition: i,
-    baseTransform: baseTransforms[i],
-    rotateX: 0,
-    rotateY: 0,
-    rotateZ: 0
-  };
-});
-
-const CubeContext = React.createContext();
-
-function CubeProvider(props) {
-  const [blocks, setBlocks] = React.useState(BLOCKS);
-  const [animatingBlocks, setAnimatingBlocks] = React.useState(null);
-  const value = React.useMemo(() => {
-    return {
-      blocks,
-      setBlocks,
-      animatingBlocks,
-      setAnimatingBlocks
-    };
-  }, [blocks, animatingBlocks]);
-  return <CubeContext.Provider value={value} {...props} />;
-}
+import {
+  faceFilters,
+  baseTransforms,
+  DEFAULT_BLOCKS,
+  FACE_DETAILS,
+  TRANSFORMS
+} from "../utils/cubeUtils.js";
 
 function getFace(faceName, blocks) {
   const filter = faceFilters[faceName];
@@ -238,12 +30,10 @@ function applyTransformsToFace(face, faceTransform, blockTransform, turns) {
 }
 
 function applyTransform(array, transform) {
-  console.log(array, transform);
   if (array.length !== transform.length) {
     return array;
   }
   const mod = array.map((a, i) => array[transform[i]]);
-  console.log(mod);
   return mod;
 }
 
@@ -332,6 +122,22 @@ function applyRotationAnimationToCube(turnString, blocks) {
 
 let timeout = null;
 
+const CubeContext = React.createContext();
+
+function CubeProvider(props) {
+  const [blocks, setBlocks] = React.useState(DEFAULT_BLOCKS);
+  const [animatingBlocks, setAnimatingBlocks] = React.useState(null);
+  const value = React.useMemo(() => {
+    return {
+      blocks,
+      setBlocks,
+      animatingBlocks,
+      setAnimatingBlocks
+    };
+  }, [blocks, animatingBlocks]);
+  return <CubeContext.Provider value={value} {...props} />;
+}
+
 function useCube() {
   const context = React.useContext(CubeContext);
   if (!context) {
@@ -354,6 +160,20 @@ function useCube() {
         setAnimatingBlocks(null);
         timeout = null;
       }, animationSpeed);
+    },
+    setCubeState: (cubeState, turnString) => {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      if (turnString) {
+        setAnimatingBlocks(applyRotationAnimationToCube(turnString, blocks));
+        timeout = setTimeout(() => {
+          setAnimatingBlocks(null);
+          timeout = null;
+        }, animationSpeed);
+      }
+      setBlocks(cubeState);
     }
   };
 }

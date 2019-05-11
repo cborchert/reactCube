@@ -1,15 +1,17 @@
 import React from "react";
 import { COLORS, FACES } from "../../utils/cubeUtils.js";
 import { useCube } from "../../state/CubeContext.js";
+import { useScene } from "../../state/SceneContext.js";
 
 import "./cube.scss";
 
 const Cube = props => {
   const { blocks, animationSpeed } = useCube();
+  const { sceneRotationCSS } = useScene();
   const { deleteTransparent } = props;
   return (
     <div className="scene">
-      <div className="pivot">
+      <div className="pivot" style={{ transform: sceneRotationCSS }}>
         <div className="cube">
           {blocks.map(({ initialPosition, ...block }, i) => (
             <Block

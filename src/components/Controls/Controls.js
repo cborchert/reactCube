@@ -1,5 +1,6 @@
 import React from "react";
 import { useCube } from "../../state/CubeContext.js";
+import { useScene } from "../../state/SceneContext.js";
 import "./controls.scss";
 
 const MOVES = [
@@ -25,18 +26,32 @@ const MOVES = [
 
 const Controls = () => {
   const { turnCube } = useCube();
+  const { toCenter, stepX, stepY, stepZ } = useScene();
   return (
     <div className="Controls">
-      {MOVES.map(move => (
-        <button
-          key={move}
-          onClick={() => {
-            turnCube(move);
-          }}
-        >
-          {move}
-        </button>
-      ))}
+      <div>
+        <div>Cube Movements</div>
+        {MOVES.map(move => (
+          <button
+            key={move}
+            onClick={() => {
+              turnCube(move);
+            }}
+          >
+            {move}
+          </button>
+        ))}
+      </div>
+      <div>
+        <div>Rotation</div>
+        <button onClick={() => stepX(45)}>X+</button>
+        <button onClick={() => stepX(-45)}>X-</button>
+        <button onClick={() => stepY(45)}>Y+</button>
+        <button onClick={() => stepY(-45)}>Y-</button>
+        <button onClick={() => stepZ(45)}>Z+</button>
+        <button onClick={() => stepZ(-45)}>Z-</button>
+        <button onClick={toCenter}>Snap To Center</button>
+      </div>
     </div>
   );
 };
