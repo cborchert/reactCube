@@ -13,14 +13,16 @@ const Cube = props => {
     <div className="scene">
       <div className="pivot" style={{ transform: sceneRotationCSS }}>
         <div className="cube">
-          {blocks.map(({ initialPosition, ...block }, i) => (
-            <Block
-              key={`block__${i}`}
-              {...block}
-              deleteTransparent={deleteTransparent}
-              animationSpeed={animationSpeed}
-            />
-          ))}
+          {blocks
+            ? blocks.map(({ initialPosition, ...block }, i) => (
+                <Block
+                  key={`block__${i}`}
+                  {...block}
+                  deleteTransparent={deleteTransparent}
+                  animationSpeed={animationSpeed}
+                />
+              ))
+            : null}
         </div>
       </div>
     </div>

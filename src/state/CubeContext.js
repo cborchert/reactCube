@@ -143,7 +143,7 @@ function useCube() {
     throw new Error("useCube must be used within a CubeProvider");
   }
   const { blocks, setBlocks, animatingBlocks, setAnimatingBlocks } = context;
-  // todo allow control of this
+  // TODO: allow control of this
   const animationSpeed = 120;
   return {
     blocks: animatingBlocks ? animatingBlocks : blocks,
