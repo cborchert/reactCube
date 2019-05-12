@@ -208,6 +208,98 @@ const BLOCK_COLORS = [
   }
 ];
 
+const BLOCK_ACTIONS = [
+  {
+    faceActions: ["L'", null, null, null, "U", "U'"]
+  },
+  {
+    faceActions: ["M'", null, null, null, null, "M"]
+  },
+  {
+    faceActions: ["R", "U'", null, null, null, "U"]
+  },
+
+  {
+    faceActions: ["S", null, null, null, "S'", null]
+  },
+  {
+    faceActions: [null, null, null, null, null, null]
+  },
+  {
+    faceActions: ["S'", "S", null, null, null, null]
+  },
+
+  {
+    faceActions: ["L", null, "U", null, "U'", null]
+  },
+  {
+    faceActions: ["M", null, "M'", null, null, null]
+  },
+  {
+    faceActions: ["R'", "U", "U'", null, null, null]
+  },
+
+  {
+    faceActions: [null, null, null, null, "E'", "E"]
+  },
+  {
+    faceActions: [null, null, null, null, null, null]
+  },
+  {
+    faceActions: [null, "E", null, null, null, "E'"]
+  },
+
+  {
+    faceActions: [null, null, null, null, null, null]
+  },
+  {
+    faceActions: [null, null, null, null, null, null]
+  },
+  {
+    faceActions: [null, null, null, null, null, null]
+  },
+
+  {
+    faceActions: [null, null, "E'", null, "E", null]
+  },
+  {
+    faceActions: [null, null, null, null, null, null]
+  },
+  {
+    faceActions: [null, "E'", "E", null, null, null]
+  },
+
+  {
+    faceActions: [null, null, null, "L", "D'", "D"]
+  },
+  {
+    faceActions: [null, null, null, "M", null, "M'"]
+  },
+  {
+    faceActions: [null, "D", null, "R'", null, "D'"]
+  },
+
+  {
+    faceActions: [null, null, null, "S'", "S", null]
+  },
+  {
+    faceActions: [null, null, null, null, null, null]
+  },
+  {
+    faceActions: [null, "S'", null, "S", null, null]
+  },
+
+  {
+    faceActions: [null, null, "D'", "L'", "D", null]
+  },
+  {
+    faceActions: [null, null, "M", "M'", null, null]
+  },
+  {
+    faceActions: [null, "D'", "D", "R", null, null]
+  }
+];
+
 let baseTransforms = [];
 for (let y = -1; y <= 1; y++) {
   for (let z = -1; z <= 1; z++) {
@@ -307,6 +399,7 @@ const DEFAULT_BLOCKS = BLOCK_COLORS.map((blockColors, i) => {
   return {
     ...blockColors,
     initialPosition: i,
+    faceActions: BLOCK_ACTIONS[i].faceActions,
     baseTransform: baseTransforms[i],
     rotateX: 0,
     rotateY: 0,

@@ -88,8 +88,10 @@ function applyTurnToCube(turnString, blocks) {
   );
   const appliedCube = applyFaceToCube(rotatedFace, faceName, blocks);
   return appliedCube.map((block, i) => ({
+    // ...DEFAULT_BLOCKS[i],
     ...block,
     baseTransform: baseTransforms[i],
+    faceActions: DEFAULT_BLOCKS[i].faceActions,
     rotateX: 0,
     rotateY: 0,
     rotateZ: 0

@@ -6,7 +6,7 @@ import { useScene } from "../../state/SceneContext.js";
 import "./cube.scss";
 
 const Cube = props => {
-  const { blocks, animationSpeed } = useCube();
+  const { blocks, animationSpeed, turnCube } = useCube();
   const { sceneRotationCSS } = useScene();
   const { deleteTransparent } = props;
   return (
@@ -20,6 +20,7 @@ const Cube = props => {
                   {...block}
                   deleteTransparent={deleteTransparent}
                   animationSpeed={animationSpeed}
+                  turnCube={turnCube}
                 />
               ))
             : null}
@@ -36,7 +37,9 @@ const Block = ({
   rotateZ,
   baseTransform,
   deleteTransparent,
-  animationSpeed
+  animationSpeed,
+  faceActions,
+  turnCube
 }) => {
   const appliedTransform = `rotateX(${rotateX || 0}deg) rotateY(${rotateY ||
     0}deg) rotateZ(${rotateZ || 0}deg)`;
@@ -45,6 +48,13 @@ const Block = ({
   return (
     <div className="block" style={{ transform, transition }}>
       {faceColors.map((color, i) => {
+        const faceAction =
+          faceActions && faceActions[i] ? faceActions[i] : null;
+        const handleClick = faceAction
+          ? () => {
+              turnCube(faceAction);
+            }
+          : () => {};
         return deleteTransparent && color === "_" ? null : (
           <div
             key={FACES[i]}
@@ -52,7 +62,7 @@ const Block = ({
               COLORS[color]
             }`}
           >
-            <div className="block__face__sticker" />
+            <div className="block__face__sticker" onClick={handleClick} />
           </div>
         );
       })}
