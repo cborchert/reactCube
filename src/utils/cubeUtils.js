@@ -25,97 +25,6 @@ const faceFilters = {
 };
 
 // URFDLB
-// const BLOCK_COLORS = [
-//   {
-//     faceColors: ["w", "_", "_", "_", "b", "r"]
-//   },
-//   {
-//     faceColors: ["w", "_", "_", "_", "_", "r"]
-//   },
-//   {
-//     faceColors: ["w", "g", "_", "_", "_", "r"]
-//   },
-
-//   {
-//     faceColors: ["w", "_", "_", "_", "b", "_"]
-//   },
-//   {
-//     faceColors: ["w", "_", "_", "_", "_", "_"]
-//   },
-//   {
-//     faceColors: ["w", "g", "_", "_", "_", "_"]
-//   },
-
-//   {
-//     faceColors: ["w", "_", "o", "_", "b", "_"]
-//   },
-//   {
-//     faceColors: ["w", "_", "o", "_", "_", "_"]
-//   },
-//   {
-//     faceColors: ["w", "g", "o", "_", "_", "_"]
-//   },
-
-//   {
-//     faceColors: ["_", "_", "_", "_", "b", "r"]
-//   },
-//   {
-//     faceColors: ["_", "_", "_", "_", "_", "r"]
-//   },
-//   {
-//     faceColors: ["_", "g", "_", "_", "_", "r"]
-//   },
-
-//   {
-//     faceColors: ["_", "_", "_", "_", "b", "_"]
-//   },
-//   {
-//     faceColors: ["_", "_", "_", "_", "_", "_"]
-//   },
-//   {
-//     faceColors: ["_", "g", "_", "_", "_", "_"]
-//   },
-
-//   {
-//     faceColors: ["_", "_", "o", "_", "b", "_"]
-//   },
-//   {
-//     faceColors: ["_", "_", "o", "_", "_", "_"]
-//   },
-//   {
-//     faceColors: ["_", "g", "o", "_", "_", "_"]
-//   },
-
-//   {
-//     faceColors: ["_", "_", "_", "y", "b", "r"]
-//   },
-//   {
-//     faceColors: ["_", "_", "_", "y", "_", "r"]
-//   },
-//   {
-//     faceColors: ["_", "g", "_", "y", "_", "r"]
-//   },
-
-//   {
-//     faceColors: ["_", "_", "_", "y", "b", "_"]
-//   },
-//   {
-//     faceColors: ["_", "_", "_", "y", "_", "_"]
-//   },
-//   {
-//     faceColors: ["_", "g", "_", "y", "_", "_"]
-//   },
-
-//   {
-//     faceColors: ["_", "_", "o", "y", "b", "_"]
-//   },
-//   {
-//     faceColors: ["_", "_", "o", "y", "_", "_"]
-//   },
-//   {
-//     faceColors: ["_", "g", "o", "y", "_", "_"]
-//   }
-// ];
 const BLOCK_COLORS = [
   {
     faceColors: ["w", "_", "_", "_", "o", "b"]
@@ -223,7 +132,7 @@ const BLOCK_ACTIONS = [
     faceActions: ["S", null, null, null, "S'", null]
   },
   {
-    faceActions: [null, null, null, null, null, null]
+    faceActions: ["U", null, null, null, null, null]
   },
   {
     faceActions: ["S'", "S", null, null, null, null]
@@ -243,27 +152,27 @@ const BLOCK_ACTIONS = [
     faceActions: [null, null, null, null, "E'", "E"]
   },
   {
-    faceActions: [null, null, null, null, null, null]
+    faceActions: [null, null, null, null, null, "B"]
   },
   {
     faceActions: [null, "E", null, null, null, "E'"]
   },
 
   {
-    faceActions: [null, null, null, null, null, null]
+    faceActions: [null, null, null, null, "L", null]
   },
   {
     faceActions: [null, null, null, null, null, null]
   },
   {
-    faceActions: [null, null, null, null, null, null]
+    faceActions: [null, "R", null, null, null, null]
   },
 
   {
     faceActions: [null, null, "E'", null, "E", null]
   },
   {
-    faceActions: [null, null, null, null, null, null]
+    faceActions: [null, null, "F", null, null, null]
   },
   {
     faceActions: [null, "E'", "E", null, null, null]
@@ -283,7 +192,7 @@ const BLOCK_ACTIONS = [
     faceActions: [null, null, null, "S'", "S", null]
   },
   {
-    faceActions: [null, null, null, null, null, null]
+    faceActions: [null, null, null, "D", null, null]
   },
   {
     faceActions: [null, "S'", null, "S", null, null]

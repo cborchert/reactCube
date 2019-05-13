@@ -32,7 +32,12 @@ function useScene() {
     rotateZ,
     setRotateZ
   } = context;
-  const sceneRotationCSS = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
+  const getSceneRotationCSS = (X, Y, Z) => {
+    return `rotateX(${X}deg) rotateY(${Y}deg) rotateZ(${Z}deg)`;
+  };
+  const applyDeltaToRotationCSS = (dX, dY, dZ) =>
+    getSceneRotationCSS(rotateX + dX, rotateY + dY, rotateZ + dZ);
+  const sceneRotationCSS = getSceneRotationCSS(rotateX, rotateY, rotateZ);
   const stepX = x => {
     setRotateX(rotateX + x);
   };
@@ -49,9 +54,14 @@ function useScene() {
   };
   return {
     sceneRotationCSS,
+    getSceneRotationCSS,
+    applyDeltaToRotationCSS,
     stepX,
+    rotateX,
     stepY,
+    rotateY,
     stepZ,
+    rotateZ,
     toCenter
   };
 }
