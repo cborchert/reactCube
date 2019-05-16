@@ -25,7 +25,7 @@ const MOVES = [
 ];
 
 const Controls = () => {
-  const { turnCube, resetCube } = useCube();
+  const { turnCube, resetCube, randomizeCube } = useCube();
   const { toCenter, stepX, stepY, stepZ } = useScene();
   return (
     <div className="Controls">
@@ -42,6 +42,7 @@ const Controls = () => {
           </button>
         ))}
         <button onClick={resetCube}>resetCube</button>
+        <button onClick={randomizeCube}>randomizeCube</button>
       </div>
       <div>
         <div>Rotation</div>

@@ -512,6 +512,7 @@ export function applySequenceToCube(sequenceString, blocks) {
   turnStrings.forEach(turnString => {
     blocks = applyTurnToCube(turnString, blocks);
   });
+  return blocks;
 }
 
 // Mapping of our block faces the string used by cube.js
@@ -601,4 +602,26 @@ export function applyRotationAnimationToCube(turnString, blocks) {
   }));
   const appliedCube = applyFaceToCube(rotatedFace, faceName, blocks);
   return appliedCube;
+}
+
+/**
+ * Create a random algorithm to scramble the cube
+ * @param {integer} depth the number of movements to include
+ */
+function createCubeScramble(depth = 50) {
+  let moves = "";
+  for (let i = 0; i < depth; i++) {
+    const faceName = FACE_NAMES[Math.round(Math.random() * 5)];
+    moves += `${faceName} `;
+  }
+  return moves;
+}
+
+/**
+ * Create a new cube object with a valid, randomized cube state
+ */
+export function createScrambledCube() {
+  const cubeState = getInitialBlocks();
+  const scramble = createCubeScramble();
+  return applySequenceToCube(scramble, cubeState);
 }

@@ -2,7 +2,8 @@ import React from "react";
 import {
   applyTurnToCube,
   applyRotationAnimationToCube,
-  getInitialBlocks
+  getInitialBlocks,
+  createScrambledCube
 } from "../utils/cubeUtils.js";
 
 const DEFAULT_BLOCKS = getInitialBlocks();
@@ -59,6 +60,13 @@ function useCube() {
         }, animationSpeed);
       }
       setBlocks(cubeState);
+    },
+    randomizeCube: () => {
+      if (timeout && timeout.current) {
+        clearTimeout(timeout.current);
+        timeout.current = null;
+      }
+      setBlocks(createScrambledCube());
     },
     resetCube: () => {
       if (timeout && timeout.current) {
