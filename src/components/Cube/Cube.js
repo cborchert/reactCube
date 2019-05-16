@@ -67,7 +67,7 @@ const Block = ({
     <div className="block" style={{ transform, transition }}>
       {Object.entries(faces).map(([faceName, color], i) => {
         const faceAction =
-          faceActions && faceActions[i] ? faceActions[i] : null;
+          faceActions && faceActions[faceName] ? faceActions[faceName] : null;
         const handleClick = faceAction
           ? () => {
               turnCube(faceAction);
