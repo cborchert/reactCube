@@ -15,7 +15,9 @@ function App() {
             <Controls />
             <GiikerController />
           </div>
-          <Cube deleteTransparent={true} />
+          <div className="App__cubeContainer">
+            <Cube deleteTransparent={true} />
+          </div>
         </CubeProvider>
       </SceneProvider>
     </div>
