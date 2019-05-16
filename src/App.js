@@ -4,15 +4,17 @@ import Controls from "./components/Controls/Controls.js";
 import GiikerController from "./components/GiikerController/GiikerController.js";
 import { CubeProvider } from "./state/CubeContext.js";
 import { SceneProvider } from "./state/SceneContext.js";
-import "./App.css";
+import "./App.scss";
 
 function App() {
   return (
     <div className="App">
       <SceneProvider>
         <CubeProvider>
-          <Controls />
-          <GiikerController />
+          <div className="App__controls">
+            <Controls />
+            <GiikerController />
+          </div>
           <Cube deleteTransparent={true} />
         </CubeProvider>
       </SceneProvider>
