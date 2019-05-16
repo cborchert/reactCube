@@ -1,6 +1,6 @@
 import React from "react";
 import { useCube } from "../../state/CubeContext.js";
-import { giikerStateToCubeState } from "../../utils/cubeUtils.js";
+import { stringStateToCubeState } from "../../utils/cubeUtils.js";
 import { Giiker } from "../../utils/giiker.js";
 import "./giikerController.scss";
 
@@ -38,7 +38,7 @@ const GiikerController = () => {
     // but 2) Has the disadvantage of the two calls being so close together that there's not enough time to apply the first move before the second is applied to the old state
     // TODO: a solution to this would be to record an array of movements here in the move handler (stored in a ref) and to send that to the store for application all at once, then to reset the ref on update
     doSetCubeState.current(
-      giikerStateToCubeState(giiker.stateString),
+      stringStateToCubeState(giiker.stateString),
       move.notation
     );
   };

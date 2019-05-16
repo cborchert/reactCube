@@ -1,13 +1,12 @@
 import React from "react";
 import { useGesture } from "react-use-gesture";
-import { COLORS, FACES } from "../../utils/cubeUtils.js";
+import { COLORS, FACE_NAMES } from "../../utils/cubeUtils.js";
 import { useCube } from "../../state/CubeContext.js";
 import { useScene } from "../../state/SceneContext.js";
 
 import "./cube.scss";
 
 const Cube = props => {
-  console.count("Cube");
   const { blocks, animationSpeed, turnCube } = useCube();
   const { sceneRotationCSS, stepX, stepY, rotateX } = useScene();
   const { deleteTransparent } = props;
@@ -49,7 +48,7 @@ const Cube = props => {
 };
 
 const Block = ({
-  faceColors,
+  faces,
   rotateX,
   rotateY,
   rotateZ,
@@ -63,9 +62,10 @@ const Block = ({
     0}deg) rotateZ(${rotateZ || 0}deg)`;
   const transform = `${appliedTransform} ${baseTransform}`;
   const transition = `${animationSpeed}ms`;
+
   return (
     <div className="block" style={{ transform, transition }}>
-      {faceColors.map((color, i) => {
+      {Object.entries(faces).map(([faceName, color], i) => {
         const faceAction =
           faceActions && faceActions[i] ? faceActions[i] : null;
         const handleClick = faceAction
@@ -75,8 +75,8 @@ const Block = ({
           : () => {};
         return deleteTransparent && color === "_" ? null : (
           <div
-            key={FACES[i]}
-            className={`block__face block__face--${FACES[i]} block__face--${
+            key={faceName}
+            className={`block__face block__face--${faceName} block__face--${
               COLORS[color]
             }`}
           >
