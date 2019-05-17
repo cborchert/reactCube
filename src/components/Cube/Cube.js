@@ -1,6 +1,6 @@
 import React from "react";
 import { useGesture } from "react-use-gesture";
-import { COLORS, FACE_NAMES } from "../../utils/cubeUtils.js";
+import { COLORS } from "../../utils/cubeUtils.js";
 import { useCube } from "../../state/CubeContext.js";
 import { useScene } from "../../state/SceneContext.js";
 

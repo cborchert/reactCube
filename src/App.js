@@ -1,5 +1,6 @@
 import React from "react";
 import Cube from "./components/Cube/Cube.js";
+import Mission from "./components/Mission/Mission.js";
 import Controls from "./components/Controls/Controls.js";
 import GiikerController from "./components/GiikerController/GiikerController.js";
 import { CubeProvider } from "./state/CubeContext.js";
@@ -14,6 +15,7 @@ function App() {
           <div className="App__controls">
             <Controls />
             <GiikerController />
+            <Mission />
           </div>
           <div className="App__cubeContainer">
             <Cube deleteTransparent={true} />

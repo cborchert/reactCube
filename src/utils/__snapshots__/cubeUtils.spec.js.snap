@@ -1937,7 +1937,520 @@ Array [
 ]
 `;
 
-exports[`cubeUtils applySequenceToCube correctly applies the sequence to the cube 1`] = `undefined`;
+exports[`cubeUtils applySequenceToCube correctly applies the sequence to the cube 1`] = `
+Array [
+  Object {
+    "baseTransform": "translateZ(-1em) translateX(-1em) translateY(-1em)",
+    "faceActions": Object {
+      "B": "U'",
+      "L": "U",
+      "U": "L'",
+    },
+    "faces": Object {
+      "B": "o",
+      "L": "y",
+      "U": "g",
+    },
+    "initialFaces": Array [
+      "L",
+      "U",
+      "B",
+    ],
+    "initialPosition": 24,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(-1em) translateX(0em) translateY(-1em)",
+    "faceActions": Object {
+      "B": "M",
+      "U": "M'",
+    },
+    "faces": Object {
+      "B": "o",
+      "U": "g",
+    },
+    "initialFaces": Array [
+      "U",
+      "B",
+    ],
+    "initialPosition": 15,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(-1em) translateX(1em) translateY(-1em)",
+    "faceActions": Object {
+      "B": "U",
+      "R": "U'",
+      "U": "R",
+    },
+    "faces": Object {
+      "B": "g",
+      "R": "w",
+      "U": "r",
+    },
+    "initialFaces": Array [
+      "R",
+      "U",
+      "B",
+    ],
+    "initialPosition": 8,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(0em) translateX(-1em) translateY(-1em)",
+    "faceActions": Object {
+      "L": "S'",
+      "U": "S",
+    },
+    "faces": Object {
+      "L": "o",
+      "U": "b",
+    },
+    "initialFaces": Array [
+      "L",
+      "U",
+    ],
+    "initialPosition": 9,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(0em) translateX(0em) translateY(-1em)",
+    "faceActions": Object {
+      "U": "U",
+    },
+    "faces": Object {
+      "U": "w",
+    },
+    "initialFaces": Array [
+      "U",
+    ],
+    "initialPosition": 4,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(0em) translateX(1em) translateY(-1em)",
+    "faceActions": Object {
+      "R": "S",
+      "U": "S'",
+    },
+    "faces": Object {
+      "R": "r",
+      "U": "y",
+    },
+    "initialFaces": Array [
+      "R",
+      "U",
+    ],
+    "initialPosition": 23,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(1em) translateX(-1em) translateY(-1em)",
+    "faceActions": Object {
+      "F": "U",
+      "L": "U'",
+      "U": "L",
+    },
+    "faces": Object {
+      "F": "w",
+      "L": "g",
+      "U": "o",
+    },
+    "initialFaces": Array [
+      "L",
+      "U",
+      "F",
+    ],
+    "initialPosition": 6,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(1em) translateX(0em) translateY(-1em)",
+    "faceActions": Object {
+      "F": "M'",
+      "U": "M",
+    },
+    "faces": Object {
+      "F": "r",
+      "U": "g",
+    },
+    "initialFaces": Array [
+      "U",
+      "F",
+    ],
+    "initialPosition": 17,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(1em) translateX(1em) translateY(-1em)",
+    "faceActions": Object {
+      "F": "U'",
+      "R": "U",
+      "U": "R'",
+    },
+    "faces": Object {
+      "F": "b",
+      "R": "w",
+      "U": "r",
+    },
+    "initialFaces": Array [
+      "R",
+      "U",
+      "F",
+    ],
+    "initialPosition": 2,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(-1em) translateX(-1em) translateY(0em)",
+    "faceActions": Object {
+      "B": "E",
+      "L": "E'",
+    },
+    "faces": Object {
+      "B": "w",
+      "L": "r",
+    },
+    "initialFaces": Array [
+      "L",
+      "B",
+    ],
+    "initialPosition": 5,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(-1em) translateX(0em) translateY(0em)",
+    "faceActions": Object {
+      "B": "B",
+    },
+    "faces": Object {
+      "B": "b",
+    },
+    "initialFaces": Array [
+      "B",
+    ],
+    "initialPosition": 10,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(-1em) translateX(1em) translateY(0em)",
+    "faceActions": Object {
+      "B": "E'",
+      "R": "E",
+    },
+    "faces": Object {
+      "B": "w",
+      "R": "b",
+    },
+    "initialFaces": Array [
+      "R",
+      "B",
+    ],
+    "initialPosition": 1,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(0em) translateX(-1em) translateY(0em)",
+    "faceActions": Object {
+      "L": "L",
+    },
+    "faces": Object {
+      "L": "o",
+    },
+    "initialFaces": Array [
+      "L",
+    ],
+    "initialPosition": 12,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(0em) translateX(0em) translateY(0em)",
+    "faceActions": Object {},
+    "faces": Object {},
+    "initialFaces": Array [],
+    "initialPosition": 13,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(0em) translateX(1em) translateY(0em)",
+    "faceActions": Object {
+      "R": "R",
+    },
+    "faces": Object {
+      "R": "r",
+    },
+    "initialFaces": Array [
+      "R",
+    ],
+    "initialPosition": 14,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(1em) translateX(-1em) translateY(0em)",
+    "faceActions": Object {
+      "F": "E'",
+      "L": "E",
+    },
+    "faces": Object {
+      "F": "w",
+      "L": "g",
+    },
+    "initialFaces": Array [
+      "L",
+      "F",
+    ],
+    "initialPosition": 7,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(1em) translateX(0em) translateY(0em)",
+    "faceActions": Object {
+      "F": "F",
+    },
+    "faces": Object {
+      "F": "g",
+    },
+    "initialFaces": Array [
+      "F",
+    ],
+    "initialPosition": 16,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(1em) translateX(1em) translateY(0em)",
+    "faceActions": Object {
+      "F": "E",
+      "R": "E'",
+    },
+    "faces": Object {
+      "F": "y",
+      "R": "b",
+    },
+    "initialFaces": Array [
+      "R",
+      "F",
+    ],
+    "initialPosition": 19,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(-1em) translateX(-1em) translateY(1em)",
+    "faceActions": Object {
+      "B": "D",
+      "D": "L",
+      "L": "D'",
+    },
+    "faces": Object {
+      "B": "o",
+      "D": "w",
+      "L": "b",
+    },
+    "initialFaces": Array [
+      "L",
+      "D",
+      "B",
+    ],
+    "initialPosition": 0,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(-1em) translateX(0em) translateY(1em)",
+    "faceActions": Object {
+      "B": "M'",
+      "D": "M",
+    },
+    "faces": Object {
+      "B": "o",
+      "D": "w",
+    },
+    "initialFaces": Array [
+      "D",
+      "B",
+    ],
+    "initialPosition": 3,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(-1em) translateX(1em) translateY(1em)",
+    "faceActions": Object {
+      "B": "D'",
+      "D": "R'",
+      "R": "D",
+    },
+    "faces": Object {
+      "B": "r",
+      "D": "y",
+      "R": "g",
+    },
+    "initialFaces": Array [
+      "R",
+      "D",
+      "B",
+    ],
+    "initialPosition": 26,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(0em) translateX(-1em) translateY(1em)",
+    "faceActions": Object {
+      "D": "S'",
+      "L": "S",
+    },
+    "faces": Object {
+      "D": "y",
+      "L": "g",
+    },
+    "initialFaces": Array [
+      "L",
+      "D",
+    ],
+    "initialPosition": 25,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(0em) translateX(0em) translateY(1em)",
+    "faceActions": Object {
+      "D": "D",
+    },
+    "faces": Object {
+      "D": "y",
+    },
+    "initialFaces": Array [
+      "D",
+    ],
+    "initialPosition": 22,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(0em) translateX(1em) translateY(1em)",
+    "faceActions": Object {
+      "D": "S",
+      "R": "S'",
+    },
+    "faces": Object {
+      "D": "y",
+      "R": "o",
+    },
+    "initialFaces": Array [
+      "R",
+      "D",
+    ],
+    "initialPosition": 21,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(1em) translateX(-1em) translateY(1em)",
+    "faceActions": Object {
+      "D": "L'",
+      "F": "D'",
+      "L": "D",
+    },
+    "faces": Object {
+      "D": "b",
+      "F": "r",
+      "L": "y",
+    },
+    "initialFaces": Array [
+      "L",
+      "D",
+      "F",
+    ],
+    "initialPosition": 20,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(1em) translateX(0em) translateY(1em)",
+    "faceActions": Object {
+      "D": "M'",
+      "F": "M",
+    },
+    "faces": Object {
+      "D": "b",
+      "F": "r",
+    },
+    "initialFaces": Array [
+      "D",
+      "F",
+    ],
+    "initialPosition": 11,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+  Object {
+    "baseTransform": "translateZ(1em) translateX(1em) translateY(1em)",
+    "faceActions": Object {
+      "D": "R",
+      "F": "D",
+      "R": "D'",
+    },
+    "faces": Object {
+      "D": "y",
+      "F": "b",
+      "R": "o",
+    },
+    "initialFaces": Array [
+      "R",
+      "D",
+      "F",
+    ],
+    "initialPosition": 18,
+    "rotateX": 0,
+    "rotateY": 0,
+    "rotateZ": 0,
+  },
+]
+`;
 
 exports[`cubeUtils applyTurnToCube correctly applies the turn to the cube 1`] = `
 Array [

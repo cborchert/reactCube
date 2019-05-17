@@ -254,8 +254,23 @@ const face_block_transforms_cw = {
 const face_block_transforms_inv = inv(face_block_transforms_cw);
 
 // Map the transforms needed for a given movement
-// NOTE that the inverses are used in the case where the movement mirrors the natural movement
-// for example: even though L moves the left face clockwise when looked at straight on, it is a mirror of the movement R
+// NOTE that L and M use inversed movements for the block orientation rotations (as expected), but have the NORMAL transform for the face rotation
+// therefore, th R face is inversed for the face rotation, which might strike certain people as strange
+// This can be explained by the fact that, according to our block indexing system the R face is "mirrored" in the same way as the D face is.
+// What I mean is that if you use the block indices mentioned at the beginning of this file and map them to the R side as if you looked at it straight on,
+// you'd get (excuse the crude ASCII diagram):
+//
+//   ____ ____ ____
+//  | \____\____\_0__\
+//  |  \____\_UP_\_1__\
+//  | F \____\____\_2__\
+//  | R |  8 | 5  | 2  |   B
+//  | O  ---- ---- ----    A
+//  | N | 17 | 14 | 11 |   C
+//   \T  ---- ---- ----    K
+//    \ | 26 | 23 | 20 |
+//     \ ---- ---- ----
+
 const MOVE_TRANSFORMS = {
   U: {
     faceTransform: face_block_transforms_cw,
@@ -480,9 +495,6 @@ export function applyTurnToCube(turnString, blocks) {
   const face = getFaceBlocks(faceName, blocks);
   const { faceTransform, blockTransform } = MOVE_TRANSFORMS[faceName];
 
-  // Determine if we're using the inverse
-  const shouldInverse = turns < 0;
-
   const rotatedFace = applyTransformsToFace(
     face,
     faceTransform,
@@ -559,7 +571,7 @@ export function stringStateToCubeState(stringState) {
   // UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB
   let cubeState = getInitialBlocks();
   const stringValid = /^[URFDLB]+$/.test(stringState);
-  if (!stringState || stringState.length !== 27 || !stringValid) {
+  if (!stringState || stringState.length !== 54 || !stringValid) {
     return cubeState;
   }
 
