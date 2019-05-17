@@ -42,7 +42,12 @@ export function getFaceNameAndColor(face) {
   return { faceName, color };
 }
 
-export function hasCross(blocks) {
+/**
+ * Given the blocks, it will detect what faces have crosses
+ * @param {array} blocks
+ * @returns {array} of facenames that have a cross
+ */
+export function detectCrosses(blocks) {
   const faces = FACE_NAMES.reduce(
     (theFaces, faceName) => ({
       ...theFaces,
@@ -51,41 +56,30 @@ export function hasCross(blocks) {
     {}
   );
   // console.log(faces);
-  Object.entries(faces).forEach(([faceName, face]) => {
+  const crosses = Object.entries(faces).reduce((crosses, [faceName, face]) => {
     // get the face color
-    console.log(`===${faceName}===`);
     const color = face[4].faces[faceName];
-    // check that the corners of this face all have the same color
-    // i.e. that it has a plus
+    // get the edges of the face
     const edges = [face[1], face[3], face[5], face[7]];
-
+    // check that the edges of this face all have the same color on the same face as the center
+    // and check that those edges have the same color as the center on the adjacent face
     const isCross = edges.reduce((soFarSoGood, edge) => {
-      console.log("start");
-      // if we've failed, just skip it
+      // if we've already failed, just skip it
       if (!soFarSoGood) return false;
-      console.log("soFarSoGood");
-
       // check against the color of the current face, if it doesn't match, fail
-      console.log("edge", edge);
-      console.log("edge[faceName]", edge.faces[faceName]);
-      console.log("color", color);
       if (edge.faces[faceName] !== color) return false;
-      console.log("good color");
-
       // check against the color of the adjacent tile
       const adjacentFaceName = Object.keys(edge.faces).filter(edgeFaceName => {
         return edgeFaceName !== faceName;
       });
       const faceToMatch = faces[adjacentFaceName];
-      console.log("faceToMatch", faceToMatch);
       const adjacentColor = faceToMatch[4].faces[adjacentFaceName];
-      console.log("adjacentCOlor", adjacentColor);
-      console.log("edge.faces[adjacentFaceName]", edge.faces[adjacentFaceName]);
       const hasAdjacentColor = edge.faces[adjacentFaceName] === adjacentColor;
+      // if it has the ajacent color, then the edge passes the test
       return hasAdjacentColor;
     }, true);
-
-    console.log(isCross);
-    return isCross;
-  });
+    // create a list of crosses on the cube
+    return isCross ? [...crosses, faceName] : crosses;
+  }, []);
+  return crosses;
 }

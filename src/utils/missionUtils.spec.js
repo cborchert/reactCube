@@ -1,5 +1,10 @@
 import { stringStateToCubeState } from "./cubeUtils";
-import { isSolved } from "./missionUtils";
+import {
+  isSolved,
+  isFaceSingleColor,
+  getFaceNameAndColor,
+  detectCrosses
+} from "./missionUtils";
 
 describe("missionUtils", () => {
   describe("isSolved", () => {
@@ -9,6 +14,7 @@ describe("missionUtils", () => {
       );
       expect(isSolved(cube)).toBe(true);
     });
+    // While this shouldn't happen it's best to mention explicitly, and it is by design.
     it("detects if cube is solved, even if faces are not in initial order", () => {
       const cube = stringStateToCubeState(
         "LLLLLLLLLRRRRRRRRRUUUUUUUUUDDDDDDDDDFFFFFFFFFBBBBBBBBB"
@@ -20,6 +26,21 @@ describe("missionUtils", () => {
         "UFUUFUUFURRRRRRRRRFDFFDFFDFDBDDBDDBDLLLLLLLLLBUBBUBBUB"
       );
       expect(isSolved(cube)).toBe(false);
+    });
+  });
+  describe("isFaceSingleColor", () => {
+    it("is tested", () => {
+      expect(true).toBe(false);
+    });
+  });
+  describe("getFaceNameAndColor", () => {
+    it("is tested", () => {
+      expect(true).toBe(false);
+    });
+  });
+  describe("detectCrosses", () => {
+    it("is tested", () => {
+      expect(true).toBe(false);
     });
   });
 });
