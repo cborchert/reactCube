@@ -55,7 +55,6 @@ export function detectCrosses(blocks) {
     }),
     {}
   );
-  // console.log(faces);
   const crosses = Object.entries(faces).reduce((crosses, [faceName, face]) => {
     // get the face color
     const color = face[4].faces[faceName];
