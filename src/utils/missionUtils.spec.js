@@ -3,7 +3,8 @@ import {
   isSolved,
   isFaceSingleColor,
   getFaceNameAndColor,
-  detectCrosses
+  detectCrosses,
+  detectSolvedFaces
 } from "./missionUtils";
 
 describe("missionUtils", () => {
@@ -39,6 +40,11 @@ describe("missionUtils", () => {
     });
   });
   describe("detectCrosses", () => {
+    it("is tested", () => {
+      expect(true).toBe(false);
+    });
+  });
+  describe("detectSolvedFaces", () => {
     it("is tested", () => {
       expect(true).toBe(false);
     });

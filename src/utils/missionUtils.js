@@ -68,7 +68,7 @@ export function detectCrosses(blocks) {
       // check against the color of the current face, if it doesn't match, fail
       if (edge.faces[faceName] !== color) return false;
       // check against the color of the adjacent tile
-      const adjacentFaceName = Object.keys(edge.faces).filter(edgeFaceName => {
+      const adjacentFaceName = Object.keys(edge.faces).find(edgeFaceName => {
         return edgeFaceName !== faceName;
       });
       const faceToMatch = faces[adjacentFaceName];
@@ -82,3 +82,252 @@ export function detectCrosses(blocks) {
   }, []);
   return crosses;
 }
+
+/**
+ * Given a face's blocks, determine if the outer layers are well aligned
+ * @param {array} face
+ */
+export function faceHasExternalBandSolved(face) {
+  const faceEdges = [
+    // top edge
+    { center: face[1], edgeBlocks: [face[0], face[2]] },
+    // right edge
+    { center: face[5], edgeBlocks: [face[2], face[8]] },
+    // bottom edge
+    { center: face[7], edgeBlocks: [face[8], face[6]] },
+    // left edge
+    { center: face[3], edgeBlocks: [face[6], face[0]] }
+  ];
+
+  // all the layer edges should align with their centers
+  return faceEdges.every(({ center, edgeBlocks }) => {
+    const [faceToMatch, centerColor] = Object.entries(center.faces)[0];
+    return edgeBlocks.every(block => {
+      return block.faces[faceToMatch] === centerColor;
+    });
+  });
+}
+
+// /**
+//  * Given the blocks, it will detect what faces have been solved
+//  * @param {array} blocks
+//  * @returns {array} of facenames that have been solved
+//  */
+// export function detectSolvedFaces(blocks) {
+//   const faces = FACE_NAMES.reduce(
+//     (theFaces, faceName) => ({
+//       ...theFaces,
+//       [faceName]: getFaceBlocks(faceName, blocks)
+//     }),
+//     {}
+//   );
+//   const solvedFaces = Object.entries(faces).reduce(
+//     (solvedFaces, [faceName, face]) => {
+//       // get the face color
+//       const centerColor = face[4].faces[faceName];
+
+//       // check that the that all the faces of all the blocks on this layer are well-aligned
+//       const isSolved = face.reduce((soFarSoGood, block) => {
+//         // if we've already failed, just skip it
+//         if (!soFarSoGood) return false;
+
+//         // check against the color of all the faces that the block has
+//         const isBlockSolved = Object.entries(block.faces).reduce(
+//           (isBlockCorrect, [blockFaceName, blockFaceColor]) => {
+//             const faceToMatch = faces[blockFaceName];
+//             const adjacentColor = faceToMatch[4].faces[blockFaceName];
+//             const hasAdjacentColor = blockFaceColor === adjacentColor;
+//             return hasAdjacentColor && isBlockCorrect;
+//           },
+//           true
+//         );
+
+//         // if the block is good and we're good so far, return true
+//         return isBlockSolved && soFarSoGood;
+//       }, true);
+//       // create a list of crosses on the cube
+//       return isSolved ? [...solvedFaces, faceName] : solvedFaces;
+//     },
+//     []
+//   );
+//   return solvedFaces;
+// }
+
+/**
+ * Given the blocks, it will detect what faces have been solved
+ * @param {array} blocks
+ * @returns {array} of facenames that have been solved
+ */
+export function detectSolvedFaces(blocks) {
+  const faces = FACE_NAMES.reduce(
+    (theFaces, faceName) => ({
+      ...theFaces,
+      [faceName]: getFaceBlocks(faceName, blocks)
+    }),
+    {}
+  );
+  const solvedFaces = Object.entries(faces).reduce(
+    (solvedFaces, [faceName, face]) => {
+      // check that the that all the faces of all the blocks on this layer are well-aligned
+      const isSolved =
+        faceHasExternalBandSolved(face) && isFaceSingleColor(face);
+      // create a list of crosses on the cube
+      return isSolved ? [...solvedFaces, faceName] : solvedFaces;
+    },
+    []
+  );
+  return solvedFaces;
+}
+
+// /**
+//  * Given the blocks, it will detect what middle faces have been solved
+//  * @param {array} blocks
+//  * @returns {array} of the middle layers names that have been solved
+//  */
+// export function detectMiddleSolved(blocks) {
+//   // Loop over the middle layers
+//   const middles = ["E", "S", "M"];
+//   const layers = middles.reduce(
+//     (theFaces, faceName) => ({
+//       ...theFaces,
+//       [faceName]: getFaceBlocks(faceName, blocks)
+//     }),
+//     {}
+//   );
+//   const solvedLayers = Object.entries(layers).reduce(
+//     (solvedLayers, [layerName, layer]) => {
+//       // set up the blocks for the test
+//       const layerEdges = [
+//         // top edge
+//         { center: layer[1], edgeBlocks: [layer[0], layer[2]] },
+//         // right edge
+//         { center: layer[5], edgeBlocks: [layer[2], layer[8]] },
+//         // bottom edge
+//         { center: layer[7], edgeBlocks: [layer[8], layer[6]] },
+//         // left edge
+//         { center: layer[3], edgeBlocks: [layer[6], layer[0]] }
+//       ];
+
+//       // all the layer edges should align with their centers
+//       const layerSolved = layerEdges.every(({ center, edgeBlocks }) => {
+//         const [faceToMatch, centerColor] = Object.entries(center.faces)[0];
+//         return edgeBlocks.every(block => (block[faceToMatch] = centerColor));
+//       });
+
+//       return layerSolved ? [...solvedLayers, layerName] : solvedLayers;
+//     },
+//     []
+//   );
+//   return solvedLayers;
+// }
+
+/**
+ * Given the blocks, it will detect what middle faces have been solved
+ * @param {array} blocks
+ * @returns {array} of the middle layers names that have been solved
+ */
+export function detectMiddleSolved(blocks) {
+  const middles = ["E", "S", "M"];
+  const layers = middles.reduce(
+    (theFaces, faceName) => ({
+      ...theFaces,
+      [faceName]: getFaceBlocks(faceName, blocks)
+    }),
+    {}
+  );
+  const solvedLayers = Object.entries(layers).reduce(
+    (solvedLayers, [layerName, layer]) => {
+      const layerSolved = faceHasExternalBandSolved(layer);
+      return layerSolved ? [...solvedLayers, layerName] : solvedLayers;
+    },
+    []
+  );
+  return solvedLayers;
+}
+
+/**
+ * Given the faces with crosses and middle layers solved, determine the bottom face if the cube is f2l
+ * otherwise return null
+ * @param {array} facesSolved name of faces that are solved
+ * @param {array} middleLayersSolved name of middle layers that have crosses
+ * @returns {string} the name of the bottom face
+ */
+export function isF2L(facesWithCrosses, middleLayersSolved) {
+  let D;
+  //D + E
+  //U + E
+  if (
+    (D = facesWithCrosses.find(
+      faceName => faceName === "D" || faceName === "U"
+    )) &&
+    middleLayersSolved.includes("E")
+  ) {
+    return D;
+  }
+  //F + S
+  //B + S
+  if (
+    (D = facesWithCrosses.find(
+      faceName => faceName === "F" || faceName === "B"
+    )) &&
+    middleLayersSolved.includes("S")
+  ) {
+    return D;
+  }
+  //L + M
+  //R + M
+  if (
+    (D = facesWithCrosses.find(
+      faceName => faceName === "L" || faceName === "R"
+    )) &&
+    middleLayersSolved.includes("M")
+  ) {
+    return D;
+  }
+  return null;
+}
+
+export function getOpposite(faceName) {
+  const opposites = {
+    F: "B",
+    B: "F",
+    U: "D",
+    D: "U",
+    R: "L",
+    L: "R"
+  };
+  return opposites[faceName];
+}
+
+//blocks
+//beginner method
+export function isFacePlus(face) {
+  const { faceName, color } = getFaceNameAndColor(face);
+  return (
+    face[1].faces[faceName] === color &&
+    face[3].faces[faceName] === color &&
+    face[5].faces[faceName] === color &&
+    face[7].faces[faceName] === color
+  );
+}
+
+//blocks
+//beginner method
+export function areCornersInPosition(face) {
+  //TODO Needs work
+  const { faceName, color } = getFaceNameAndColor(face);
+  return (
+    Object.values(face[0].faces).includes(color) &&
+    Object.values(face[2].faces).includes(color) &&
+    Object.values(face[6].faces).includes(color) &&
+    Object.values(face[8].faces).includes(color)
+  );
+}
+
+//blocks
+//check is F2L and opposite is solid
+export function isPLL() {}
+
+//blocks
+//check is F2L and opposite is corner solved (not cross)
+export function isOLL() {}

@@ -1,16 +1,54 @@
 import React from "react";
-import { isSolved, detectCrosses } from "../../utils/missionUtils.js";
+import {
+  isSolved,
+  detectCrosses,
+  detectSolvedFaces,
+  detectMiddleSolved,
+  isF2L,
+  isFacePlus,
+  getOpposite,
+  areCornersInPosition
+} from "../../utils/missionUtils.js";
+import { getFaceBlocks } from "../../utils/cubeUtils";
 import { useCube } from "../../state/CubeContext.js";
+
+import "./mission.scss";
 
 const Mission = () => {
   const { blocks } = useCube();
   const cubeIsSolved = isSolved(blocks);
   const cubeCrosses = detectCrosses(blocks);
+  const cubeFacesSolved = detectSolvedFaces(blocks);
+  const middlesSolved = detectMiddleSolved(blocks);
+  const bottomOfF2L = isF2L(cubeCrosses, middlesSolved);
+  const topColor = getOpposite(bottomOfF2L);
+  console.log(bottomOfF2L, topColor);
+  const topFace = topColor && getFaceBlocks(topColor, blocks);
+  console.log(topFace);
+  const topIsPlus = bottomOfF2L && topFace && isFacePlus(topFace);
+  const topIsCross = topColor && cubeCrosses && cubeCrosses.includes(topColor);
+  const topCornersInPosition = topColor && areCornersInPosition(topFace);
+  const objectives = [
+    { text: "bottom cross", check: cubeCrosses && cubeCrosses.length > 0 },
+    {
+      text: "bottom solved",
+      check: cubeFacesSolved && cubeFacesSolved.length > 0
+    },
+    { text: "first 2 layers", check: bottomOfF2L },
+    { text: "top is plus", check: topIsPlus },
+    { text: "top cross", check: topIsCross },
+    // { text: "top corners", check: topCornersInPosition },
+    { text: "solved", check: cubeIsSolved }
+  ];
   return (
-    <div>
-      <ul>
-        <li>hasCross: {cubeCrosses && cubeCrosses.length > 0 ? "Y" : "N"}</li>
-        <li>isSolved: {cubeIsSolved ? "Y" : "N"}</li>
+    <div className="Missions">
+      <ul className="objectives">
+        {objectives.map(({ text, check }) => (
+          <li
+            key={text}
+            className={check ? "objective objective--complete" : "objective"}
+          >{`${text}: ${check ? "YES" : "NO"}`}</li>
+        ))}
       </ul>
     </div>
   );

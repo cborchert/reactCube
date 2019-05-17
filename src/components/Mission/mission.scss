@@ -1,0 +1,21 @@
+$red: #ff6b81;
+$green: #7bed9f;
+
+.Missions {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  width: 200px;
+}
+
+.objectives {
+  text-align: left;
+  list-style: none;
+}
+
+.objective {
+  color: $red;
+  &.objective--complete {
+    color: $green;
+  }
+}
