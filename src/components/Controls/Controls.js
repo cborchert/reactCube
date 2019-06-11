@@ -24,9 +24,60 @@ const MOVES = [
   "S'"
 ];
 
+const KEY_TO_MOVE_MAP = {
+  w: "U",
+  W: "U'",
+  d: "R",
+  D: "R'",
+  s: "F",
+  S: "F'",
+  a: "L",
+  A: "L'",
+  x: "D",
+  X: "D'",
+  z: "B",
+  Z: "B'",
+  r: "M",
+  R: "M'",
+  f: "E",
+  F: "E'",
+  v: "S",
+  V: "S'"
+};
+
 const Controls = () => {
   const { turnCube, resetCube, randomizeCube } = useCube();
   const { toCenter, stepX, stepY, stepZ } = useScene();
+
+  // Add event listeners
+  React.useEffect(() => {
+    // If released key is our target key then set to false
+    const keyHandler = ({ key }) => {
+      if (key === "ArrowLeft") {
+        stepY(-22.5);
+      } else if (key === "ArrowRight") {
+        stepY(22.5);
+      } else if (key === "ArrowDown") {
+        stepX(-22.5);
+      } else if (key === "ArrowUp") {
+        stepX(22.5);
+      } else if (key === "/") {
+        toCenter();
+      } else {
+        const move = KEY_TO_MOVE_MAP[key];
+        if (move) {
+          turnCube(move);
+        }
+      }
+    };
+
+    window.addEventListener("keyup", keyHandler);
+    // Remove event listeners on cleanup
+    return () => {
+      window.removeEventListener("keyup", keyHandler);
+    };
+  }, [stepX, stepY, toCenter, turnCube]);
+
   return (
     <div className="Controls">
       <div>
