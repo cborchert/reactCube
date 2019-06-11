@@ -3,12 +3,16 @@ import {
   applyTurnToCube,
   applyRotationAnimationToCube,
   getInitialBlocks,
-  createScrambledCube
+  createScrambledCube,
+  stringStateToCubeState
 } from "../utils/cubeUtils.js";
 
-const DEFAULT_BLOCKS = getInitialBlocks();
 const CubeContext = React.createContext();
-
+const DEFAULT_BLOCKS = getInitialBlocks();
+// TODO: Test
+// const DEFAULT_BLOCKS = stringStateToCubeState(
+//   "FULUUUBUURRURRRRRRRFFFFFFFFDDDDDDDDDLLULLLLLLBBUBBBBBB"
+// );
 function CubeProvider(props) {
   const [blocks, setBlocks] = React.useState(DEFAULT_BLOCKS);
   const [animatingBlocks, setAnimatingBlocks] = React.useState(null);

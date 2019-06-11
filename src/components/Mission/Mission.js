@@ -19,15 +19,16 @@ const Mission = () => {
   const cubeIsSolved = isSolved(blocks);
   const cubeCrosses = detectCrosses(blocks);
   const cubeFacesSolved = detectSolvedFaces(blocks);
-  const middlesSolved = detectMiddleSolved(blocks);
-  const bottomOfF2L = isF2L(cubeCrosses, middlesSolved);
+  // const middlesSolved = detectMiddleSolved(blocks);
+  // const bottomOfF2L = isF2L(cubeCrosses, middlesSolved);
+  const bottomOfF2L = isF2L(blocks);
+  // console.log(bottomOfF2L);
   const topColor = getOpposite(bottomOfF2L);
-  console.log(bottomOfF2L, topColor);
   const topFace = topColor && getFaceBlocks(topColor, blocks);
-  console.log(topFace);
   const topIsPlus = bottomOfF2L && topFace && isFacePlus(topFace);
   const topIsCross = topColor && cubeCrosses && cubeCrosses.includes(topColor);
-  const topCornersInPosition = topColor && areCornersInPosition(topFace);
+  const topCornersInPosition =
+    topColor && areCornersInPosition(topColor, blocks);
   const objectives = [
     { text: "bottom cross", check: cubeCrosses && cubeCrosses.length > 0 },
     {
@@ -37,7 +38,7 @@ const Mission = () => {
     { text: "first 2 layers", check: bottomOfF2L },
     { text: "top is plus", check: topIsPlus },
     { text: "top cross", check: topIsCross },
-    // { text: "top corners", check: topCornersInPosition },
+    { text: "top corners", check: topCornersInPosition },
     { text: "solved", check: cubeIsSolved }
   ];
   return (

@@ -55,6 +55,20 @@ export const COLORS = {
   _: "transparent"
 };
 
+/**
+ * Inverses the keys and the values of an object
+ * @param {*} obj the original object returning the transform
+ * @returns the inversed object
+ */
+export const inv = obj => {
+  const inversed = {};
+  const pairs = Object.entries(obj);
+  pairs.forEach(([key, val], i) => {
+    inversed[val] = key;
+  });
+  return inversed;
+};
+
 // cube.js face name order
 export const FACE_NAMES = ["U", "R", "F", "D", "L", "B"];
 
@@ -66,6 +80,8 @@ const FACE_TO_COLOR_MAP = {
   L: "o",
   B: "b"
 };
+
+const COLOR_TO_FACE_MAP = inv(FACE_TO_COLOR_MAP);
 
 /**
  * The block actions by face. The indices here are the same as the numbering of blocks.
@@ -186,20 +202,6 @@ export const getInitialBlocks = () =>
  * transform({U:"G", F:"O"}) should return an object such that obj.U === "O"
  * i.e. The NEW "U" face takes its value from the OLD "F" face...
  */
-
-/**
- * Inverses the keys and the values of an object
- * @param {*} obj the original object returning the transform
- * @returns the inversed object
- */
-export const inv = obj => {
-  const inversed = {};
-  const pairs = Object.entries(obj);
-  pairs.forEach(([key, val], i) => {
-    inversed[val] = key;
-  });
-  return inversed;
-};
 
 // rotation LMR (clockwise per layer)
 // transform map describes rotation for R. L and S are inversed
@@ -567,7 +569,7 @@ const BLOCK_POSITIONS = [
  * @returns {object} cube state
  */
 export function stringStateToCubeState(stringState) {
-  // cubeState is a string like so
+  // stringState is a string like so
   // UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB
   let cubeState = getInitialBlocks();
   const stringValid = /^[URFDLB]+$/.test(stringState);
@@ -583,8 +585,35 @@ export function stringStateToCubeState(stringState) {
         FACE_TO_COLOR_MAP[stringState[faceIndex]];
     });
   });
-
+  // remove undefineds from stickers
+  cubeState.forEach(({ faces }) => {
+    FACE_NAMES.forEach(faceName => {
+      if (typeof faces[faceName] === "undefined") {
+        delete faces[faceName];
+      }
+    });
+  });
   return cubeState;
+}
+
+/**
+ * Given a block state returns a giiker.js-like string state
+ * @param {object} cubeState
+ * @returns {string} string cube state
+ */
+export function cubeStateToStringState(cubeState) {
+  let stringStateArray = Array.apply(null, Array(54));
+  // loop over block positions determine the positions of stickers and their colors
+  BLOCK_POSITIONS.forEach((block, i) => {
+    block.forEach((faceIndex, j) => {
+      if (faceIndex > -1) {
+        // map the cubeState's face colors to the array
+        stringStateArray[faceIndex] =
+          COLOR_TO_FACE_MAP[cubeState[i].faces[FACE_NAMES[j]]];
+      }
+    });
+  });
+  return stringStateArray.join("");
 }
 
 /**

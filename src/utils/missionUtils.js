@@ -252,12 +252,25 @@ export function detectMiddleSolved(blocks) {
  * @param {array} middleLayersSolved name of middle layers that have crosses
  * @returns {string} the name of the bottom face
  */
-export function isF2L(facesWithCrosses, middleLayersSolved) {
+export function isF2L(blocks) {
+  // Take only faces that are completely solved and aligned (in a cross state)
+  // These are our potential bottom layers of F2L
+  const facesWithCrosses = detectCrosses(blocks);
+  const cubeFacesSolved = detectSolvedFaces(blocks);
+  const middleLayersSolved = detectMiddleSolved(blocks);
+  const solvedCrosses = facesWithCrosses.filter(
+    faceName => cubeFacesSolved.indexOf(faceName) > -1
+  );
+
+  // Returns the bottom layer "D" of solved state
   let D;
+
+  // Go through the solved crosses and return the first which matches: with the corresponding middle layer solved.
+
   //D + E
   //U + E
   if (
-    (D = facesWithCrosses.find(
+    (D = solvedCrosses.find(
       faceName => faceName === "D" || faceName === "U"
     )) &&
     middleLayersSolved.includes("E")
@@ -267,7 +280,7 @@ export function isF2L(facesWithCrosses, middleLayersSolved) {
   //F + S
   //B + S
   if (
-    (D = facesWithCrosses.find(
+    (D = solvedCrosses.find(
       faceName => faceName === "F" || faceName === "B"
     )) &&
     middleLayersSolved.includes("S")
@@ -277,7 +290,7 @@ export function isF2L(facesWithCrosses, middleLayersSolved) {
   //L + M
   //R + M
   if (
-    (D = facesWithCrosses.find(
+    (D = solvedCrosses.find(
       faceName => faceName === "L" || faceName === "R"
     )) &&
     middleLayersSolved.includes("M")
@@ -313,15 +326,54 @@ export function isFacePlus(face) {
 
 //blocks
 //beginner method
-export function areCornersInPosition(face) {
-  //TODO Needs work
-  const { faceName, color } = getFaceNameAndColor(face);
-  return (
-    Object.values(face[0].faces).includes(color) &&
-    Object.values(face[2].faces).includes(color) &&
-    Object.values(face[6].faces).includes(color) &&
-    Object.values(face[8].faces).includes(color)
-  );
+// export function areCornersInPosition(face) {
+//   //TODO Needs work
+//   const { faceName, color } = getFaceNameAndColor(face);
+//   console.log(face, faceName, color);
+//   // for each corner (blocks 0, 2, 6, 8), get list of facenames
+//   // get colors of each facename
+//   //
+//   return (
+//     Object.values(face[0].faces).includes(color) &&
+//     Object.values(face[2].faces).includes(color) &&
+//     Object.values(face[6].faces).includes(color) &&
+//     Object.values(face[8].faces).includes(color)
+//   );
+// }
+export function areCornersInPosition(faceName, blocks) {
+  // console.log("areCornersInPosition? investigating face: ", faceName);
+  const faces = {
+    U: getFaceBlocks("U", blocks),
+    D: getFaceBlocks("D", blocks),
+    L: getFaceBlocks("L", blocks),
+    R: getFaceBlocks("R", blocks),
+    B: getFaceBlocks("B", blocks),
+    F: getFaceBlocks("F", blocks)
+  };
+  const faceColors = {
+    U: getFaceNameAndColor(faces["U"])["color"],
+    D: getFaceNameAndColor(faces["D"])["color"],
+    L: getFaceNameAndColor(faces["L"])["color"],
+    R: getFaceNameAndColor(faces["R"])["color"],
+    F: getFaceNameAndColor(faces["F"])["color"],
+    B: getFaceNameAndColor(faces["B"])["color"]
+  };
+  const face = faces[faceName];
+  // for each corner (blocks 0, 2, 6, 8),
+  //   - get the sticker colors on corner
+  //   - get the corner's facenames
+  //   - get the facenames colors
+  //   - check that the facename colors and the sticker colors match
+  const cornerBlockIndices = [0, 2, 6, 8];
+  const cornerBlocks = cornerBlockIndices.map(v => face[v]);
+  return cornerBlocks.every(({ faces }) => {
+    const cornerFaceNames = Object.keys(faces);
+    const expectedFaceColors = cornerFaceNames.map(name => faceColors[name]);
+    const cornerFaceColors = Object.values(faces);
+    // console.log("cornerFaceColors, expectedFaceColors");
+    // console.log(cornerFaceColors, expectedFaceColors);
+    return expectedFaceColors.every(color => cornerFaceColors.includes(color));
+  });
 }
 
 //blocks
