@@ -70,8 +70,14 @@ const Block = ({
         const faceAction =
           faceActions && faceActions[faceName] ? faceActions[faceName] : null;
         const handleClick = faceAction
-          ? () => {
-              turnCube(faceAction);
+          ? e => {
+              const inverseAction =
+                faceAction.indexOf("'") > -1
+                  ? faceAction.replace("'", "")
+                  : `${faceAction}'`;
+              // if shift engaged, we do the inverse
+              const action = e.shiftKey ? inverseAction : faceAction;
+              turnCube(action);
             }
           : () => {};
         return deleteTransparent && color === "_" ? null : (

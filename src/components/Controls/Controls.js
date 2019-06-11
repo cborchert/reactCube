@@ -1,6 +1,7 @@
 import React from "react";
 import { useCube } from "../../state/CubeContext.js";
 import { useScene } from "../../state/SceneContext.js";
+import { inv } from "../../utils/cubeUtils.js";
 import "./controls.scss";
 
 const MOVES = [
@@ -44,6 +45,8 @@ const KEY_TO_MOVE_MAP = {
   v: "S",
   V: "S'"
 };
+
+const MOVE_TO_KEY_MAP = inv(KEY_TO_MOVE_MAP);
 
 const Controls = () => {
   const { turnCube, resetCube, randomizeCube } = useCube();
@@ -89,6 +92,7 @@ const Controls = () => {
               turnCube(move);
             }}
           >
+            {MOVE_TO_KEY_MAP[move] ? `[${MOVE_TO_KEY_MAP[move]}] ` : ""}
             {move}
           </button>
         ))}

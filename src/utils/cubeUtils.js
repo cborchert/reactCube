@@ -72,7 +72,7 @@ export const inv = obj => {
 // cube.js face name order
 export const FACE_NAMES = ["U", "R", "F", "D", "L", "B"];
 
-const FACE_TO_COLOR_MAP = {
+export const FACE_TO_COLOR_MAP = {
   U: "w",
   R: "r",
   F: "g",
@@ -81,7 +81,7 @@ const FACE_TO_COLOR_MAP = {
   B: "b"
 };
 
-const COLOR_TO_FACE_MAP = inv(FACE_TO_COLOR_MAP);
+export const COLOR_TO_FACE_MAP = inv(FACE_TO_COLOR_MAP);
 
 /**
  * The block actions by face. The indices here are the same as the numbering of blocks.

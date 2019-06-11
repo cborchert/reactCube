@@ -376,6 +376,17 @@ export function areCornersInPosition(faceName, blocks) {
   });
 }
 
+/**
+ * Checks if every outward facing sticker of a given face is the same color as the face
+ * @param {*} faceName
+ * @param {*} blocks
+ */
+export function isFaceSolid(faceName, blocks) {
+  const faceBlocks = getFaceBlocks(faceName, blocks);
+  const expectedColor = faceBlocks[4].faces[faceName];
+  return faceBlocks.every(({ faces }) => faces[faceName] === expectedColor);
+}
+
 //blocks
 //check is F2L and opposite is solid
 export function isPLL() {}

@@ -3,11 +3,11 @@ import {
   isSolved,
   detectCrosses,
   detectSolvedFaces,
-  detectMiddleSolved,
   isF2L,
   isFacePlus,
   getOpposite,
-  areCornersInPosition
+  areCornersInPosition,
+  isFaceSingleColor
 } from "../../utils/missionUtils.js";
 import { getFaceBlocks } from "../../utils/cubeUtils";
 import { useCube } from "../../state/CubeContext.js";
@@ -29,6 +29,7 @@ const Mission = () => {
   const topIsCross = topColor && cubeCrosses && cubeCrosses.includes(topColor);
   const topCornersInPosition =
     topColor && areCornersInPosition(topColor, blocks);
+  const isOll = topCornersInPosition && isFaceSingleColor(topFace);
   const objectives = [
     { text: "bottom cross", check: cubeCrosses && cubeCrosses.length > 0 },
     {
@@ -39,6 +40,7 @@ const Mission = () => {
     { text: "top is plus", check: topIsPlus },
     { text: "top cross", check: topIsCross },
     { text: "top corners", check: topCornersInPosition },
+    { text: "isOLL", check: isOll },
     { text: "solved", check: cubeIsSolved }
   ];
   return (
