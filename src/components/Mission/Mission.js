@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   isSolved,
   detectCrosses,
@@ -14,15 +14,25 @@ import { useCube } from "../../state/CubeContext.js";
 
 import "./mission.scss";
 
+function msToTime(duration) {
+  var milliseconds = parseInt((duration % 1000) / 10),
+    seconds = Math.floor((duration / 1000) % 60),
+    minutes = Math.floor(duration / (1000 * 60));
+
+  milliseconds = milliseconds < 10 ? "0" + milliseconds : milliseconds;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+
+  return minutes + ":" + seconds + "." + milliseconds;
+}
+
 const Mission = () => {
   const { blocks } = useCube();
+
   const cubeIsSolved = isSolved(blocks);
   const cubeCrosses = detectCrosses(blocks);
   const cubeFacesSolved = detectSolvedFaces(blocks);
-  // const middlesSolved = detectMiddleSolved(blocks);
-  // const bottomOfF2L = isF2L(cubeCrosses, middlesSolved);
   const bottomOfF2L = isF2L(blocks);
-  // console.log(bottomOfF2L);
   const topColor = getOpposite(bottomOfF2L);
   const topFace = topColor && getFaceBlocks(topColor, blocks);
   const topIsPlus = bottomOfF2L && topFace && isFacePlus(topFace);
@@ -30,6 +40,7 @@ const Mission = () => {
   const topCornersInPosition =
     topColor && areCornersInPosition(topColor, blocks);
   const isOll = topCornersInPosition && isFaceSingleColor(topFace);
+
   const objectives = [
     { text: "bottom cross", check: cubeCrosses && cubeCrosses.length > 0 },
     {
@@ -43,6 +54,7 @@ const Mission = () => {
     { text: "isOLL", check: isOll },
     { text: "solved", check: cubeIsSolved }
   ];
+
   return (
     <div className="Missions">
       <ul className="objectives">
@@ -56,5 +68,56 @@ const Mission = () => {
     </div>
   );
 };
+
+const StopWatch = React.memo(() => {
+  const [date, setDate] = useState(new Date());
+  const [startTime, setStartTime] = useState(null);
+  const [finishTime, setFinishTime] = useState(null);
+  useEffect(() => {
+    const tick = () => {
+      setDate(new Date());
+    };
+    const timerID = setInterval(() => tick(), 10);
+    return () => {
+      clearInterval(timerID);
+    };
+  });
+
+  let elapsedTime;
+  let stopWatchFunction;
+  let stopWatchWording;
+  if (finishTime) {
+    elapsedTime = finishTime;
+    stopWatchWording = "reset";
+    stopWatchFunction = () => {
+      setStartTime(null);
+      setFinishTime(null);
+    };
+  } else {
+    if (startTime && date) {
+      elapsedTime = date - startTime;
+      if (elapsedTime < 0) {
+        elapsedTime = 0;
+      }
+      stopWatchWording = "stop";
+      stopWatchFunction = () => {
+        setFinishTime(elapsedTime);
+      };
+    } else {
+      elapsedTime = 0;
+      stopWatchWording = "start";
+      stopWatchFunction = () => {
+        setFinishTime(null);
+        setStartTime(Date.now());
+      };
+    }
+  }
+  return (
+    <div>
+      <h2 style={{ fontFamily: "monospace" }}>{msToTime(elapsedTime)}</h2>
+      <button onClick={stopWatchFunction}>{stopWatchWording}</button>
+    </div>
+  );
+});
 
 export default Mission;
