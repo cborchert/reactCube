@@ -27,6 +27,7 @@ function msToTime(duration) {
 }
 
 const Mission = () => {
+  // Set up objectives based on cube state
   const { blocks } = useCube();
 
   const cubeIsSolved = isSolved(blocks);
@@ -40,7 +41,6 @@ const Mission = () => {
   const topCornersInPosition =
     topColor && areCornersInPosition(topColor, blocks);
   const isOll = topCornersInPosition && isFaceSingleColor(topFace);
-
   const objectives = [
     { text: "bottom cross", check: cubeCrosses && cubeCrosses.length > 0 },
     {
@@ -55,8 +55,23 @@ const Mission = () => {
     { text: "solved", check: cubeIsSolved }
   ];
 
+  // Set up state for stopwatch
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+  const stopWatchProps = { startTime, setStartTime, endTime, setEndTime };
+
+  // if solved, stop timer
+  useEffect(() => {
+    if (cubeIsSolved && startTime && !endTime) {
+      const elapsedTime = new Date() - startTime;
+      setEndTime(elapsedTime);
+      setStartTime(null);
+    }
+  }, [cubeIsSolved, endTime, setEndTime, startTime]);
+
   return (
     <div className="Missions">
+      <StopWatch {...stopWatchProps} />
       <ul className="objectives">
         {objectives.map(({ text, check }) => (
           <li
@@ -69,55 +84,56 @@ const Mission = () => {
   );
 };
 
-const StopWatch = React.memo(() => {
-  const [date, setDate] = useState(new Date());
-  const [startTime, setStartTime] = useState(null);
-  const [finishTime, setFinishTime] = useState(null);
-  useEffect(() => {
-    const tick = () => {
-      setDate(new Date());
-    };
-    const timerID = setInterval(() => tick(), 10);
-    return () => {
-      clearInterval(timerID);
-    };
-  });
+const StopWatch = React.memo(
+  ({ startTime, setStartTime, endTime, setEndTime }) => {
+    const [date, setDate] = useState(new Date());
 
-  let elapsedTime;
-  let stopWatchFunction;
-  let stopWatchWording;
-  if (finishTime) {
-    elapsedTime = finishTime;
-    stopWatchWording = "reset";
-    stopWatchFunction = () => {
-      setStartTime(null);
-      setFinishTime(null);
-    };
-  } else {
-    if (startTime && date) {
-      elapsedTime = date - startTime;
-      if (elapsedTime < 0) {
-        elapsedTime = 0;
-      }
-      stopWatchWording = "stop";
+    useEffect(() => {
+      const tick = () => {
+        setDate(new Date());
+      };
+      const timerID = setInterval(() => tick(), 10);
+      return () => {
+        clearInterval(timerID);
+      };
+    });
+
+    let elapsedTime;
+    let stopWatchFunction;
+    let stopWatchWording;
+    if (endTime) {
+      elapsedTime = endTime;
+      stopWatchWording = "reset";
       stopWatchFunction = () => {
-        setFinishTime(elapsedTime);
+        setStartTime(null);
+        setEndTime(null);
       };
     } else {
-      elapsedTime = 0;
-      stopWatchWording = "start";
-      stopWatchFunction = () => {
-        setFinishTime(null);
-        setStartTime(Date.now());
-      };
+      if (startTime && date) {
+        elapsedTime = date - startTime;
+        if (elapsedTime < 0) {
+          elapsedTime = 0;
+        }
+        stopWatchWording = "stop";
+        stopWatchFunction = () => {
+          setEndTime(elapsedTime);
+        };
+      } else {
+        elapsedTime = 0;
+        stopWatchWording = "start";
+        stopWatchFunction = () => {
+          setEndTime(null);
+          setStartTime(Date.now());
+        };
+      }
     }
+    return (
+      <div>
+        <h2 style={{ fontFamily: "monospace" }}>{msToTime(elapsedTime)}</h2>
+        <button onClick={stopWatchFunction}>{stopWatchWording}</button>
+      </div>
+    );
   }
-  return (
-    <div>
-      <h2 style={{ fontFamily: "monospace" }}>{msToTime(elapsedTime)}</h2>
-      <button onClick={stopWatchFunction}>{stopWatchWording}</button>
-    </div>
-  );
-});
+);
 
 export default Mission;
