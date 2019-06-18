@@ -3,8 +3,7 @@ import {
   applyTurnToCube,
   applyRotationAnimationToCube,
   getInitialBlocks,
-  createScrambledCube,
-  stringStateToCubeState
+  createScrambledCube
 } from "../utils/cubeUtils.js";
 
 const CubeContext = React.createContext();
@@ -16,14 +15,17 @@ const DEFAULT_BLOCKS = getInitialBlocks();
 function CubeProvider(props) {
   const [blocks, setBlocks] = React.useState(DEFAULT_BLOCKS);
   const [animatingBlocks, setAnimatingBlocks] = React.useState(null);
+  const [moveHistory, setMoveHistory] = React.useState([]);
   const value = React.useMemo(() => {
     return {
       blocks,
       setBlocks,
       animatingBlocks,
-      setAnimatingBlocks
+      setAnimatingBlocks,
+      moveHistory,
+      setMoveHistory
     };
-  }, [blocks, animatingBlocks]);
+  }, [blocks, animatingBlocks, moveHistory]);
   return <CubeContext.Provider value={value} {...props} />;
 }
 
@@ -33,12 +35,24 @@ function useCube() {
   if (!context) {
     throw new Error("useCube must be used within a CubeProvider");
   }
-  const { blocks, setBlocks, animatingBlocks, setAnimatingBlocks } = context;
+  const {
+    blocks,
+    setBlocks,
+    animatingBlocks,
+    setAnimatingBlocks,
+    moveHistory,
+    setMoveHistory
+  } = context;
   // TODO: allow control of this
   const animationSpeed = 120;
   return {
     blocks: animatingBlocks ? animatingBlocks : blocks,
     animationSpeed: animatingBlocks ? animationSpeed : 0,
+    moveHistory: moveHistory,
+    setCubeHistory: move => {
+      moveHistory.push(move);
+      setMoveHistory(moveHistory);
+    },
     turnCube: turnString => {
       if (timeout && timeout.current) {
         clearTimeout(timeout.current);
@@ -46,6 +60,9 @@ function useCube() {
       }
       setAnimatingBlocks(applyRotationAnimationToCube(turnString, blocks));
       setBlocks(applyTurnToCube(turnString, blocks));
+
+      moveHistory.push(turnString);
+      setMoveHistory(moveHistory);
       timeout.current = setTimeout(() => {
         setAnimatingBlocks(null);
         timeout.current = null;

@@ -8,7 +8,7 @@ const giiker = new Giiker();
 
 const GiikerController = () => {
   // const { turnCube, setCubeState } = useCube();
-  const { setCubeState } = useCube();
+  const { setCubeState, setCubeHistory } = useCube();
 
   // keep the most recent instance of turnCube / setCubeState as a ref
   // otherwise the callback will always be passed a stale version
@@ -41,6 +41,8 @@ const GiikerController = () => {
       stringStateToCubeState(giiker.stateString),
       move.notation
     );
+
+    setCubeHistory(move.notation);
   };
 
   // TODO: add reset in case the cube gets out of sync

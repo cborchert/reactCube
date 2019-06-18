@@ -14,22 +14,18 @@ import { useCube } from "../../state/CubeContext.js";
 
 import "./mission.scss";
 
-function msToTime(duration) {
-  var milliseconds = parseInt((duration % 1000) / 10),
+const normalize = number => (number < 10 ? `0${number}` : number);
+
+const msToTime = duration => {
+  const milliseconds = parseInt((duration % 1000) / 10, 10),
     seconds = Math.floor((duration / 1000) % 60),
     minutes = Math.floor(duration / (1000 * 60));
+  return `${minutes > 0 ? `${normalize(minutes)}:` : ""}${normalize(
+    seconds
+  )}:${normalize(milliseconds)}`;
+};
 
-  milliseconds = milliseconds < 10 ? "0" + milliseconds : milliseconds;
-  minutes = minutes < 10 ? "0" + minutes : minutes;
-  seconds = seconds < 10 ? "0" + seconds : seconds;
-
-  return minutes + ":" + seconds + "." + milliseconds;
-}
-
-const Mission = () => {
-  // Set up objectives based on cube state
-  const { blocks } = useCube();
-
+const getResolved = blocks => {
   const cubeIsSolved = isSolved(blocks);
   const cubeCrosses = detectCrosses(blocks);
   const cubeFacesSolved = detectSolvedFaces(blocks);
@@ -41,23 +37,68 @@ const Mission = () => {
   const topCornersInPosition =
     topColor && areCornersInPosition(topColor, blocks);
   const isOll = topCornersInPosition && isFaceSingleColor(topFace);
-  const objectives = [
-    { text: "bottom cross", check: cubeCrosses && cubeCrosses.length > 0 },
+
+  return {
+    cubeIsSolved,
+    cubeCrosses,
+    cubeFacesSolved,
+    bottomOfF2L,
+    topColor,
+    topFace,
+    topIsPlus,
+    topIsCross,
+    topCornersInPosition,
+    isOll
+  };
+};
+
+const getObjectives = ({ blocks }) => {
+  const {
+    cubeIsSolved,
+    cubeCrosses,
+    cubeFacesSolved,
+    bottomOfF2L,
+    topIsPlus,
+    topIsCross,
+    topCornersInPosition,
+    isOll
+  } = getResolved(blocks);
+  return [
+    {
+      text: "bottom cross",
+      check: cubeCrosses && cubeCrosses.length > 0
+    },
     {
       text: "bottom solved",
       check: cubeFacesSolved && cubeFacesSolved.length > 0
     },
-    { text: "first 2 layers", check: bottomOfF2L },
+    {
+      text: "first 2 layers",
+      check: bottomOfF2L && bottomOfF2L.length > 0
+    },
     { text: "top is plus", check: topIsPlus },
     { text: "top cross", check: topIsCross },
     { text: "top corners", check: topCornersInPosition },
     { text: "isOLL", check: isOll },
     { text: "solved", check: cubeIsSolved }
   ];
+};
 
+const Mission = () => {
   // Set up state for stopwatch
   const [startTime, setStartTime] = useState(null);
+
+  // Set up objectives based on cube state
+  const { blocks, moveHistory } = useCube();
+  const { cubeIsSolved } = getResolved(blocks);
+
+  const objectives = getObjectives({
+    blocks
+  });
+
+  const [timesResolved, setTimesResolved] = useState([]);
   const [endTime, setEndTime] = useState(null);
+
   const stopWatchProps = { startTime, setStartTime, endTime, setEndTime };
 
   // if solved, stop timer
@@ -66,20 +107,54 @@ const Mission = () => {
       const elapsedTime = new Date() - startTime;
       setEndTime(elapsedTime);
       setStartTime(null);
+      setTimesResolved([]);
     }
-  }, [cubeIsSolved, endTime, setEndTime, startTime]);
+  }, [cubeIsSolved, endTime, startTime]);
 
+  /*useEffect(() => {
+    const objectives = getObjectives({
+      blocks
+    });
+
+    if (!cubeIsSolved) {
+      const all = objectives.map((objective, i) => {
+        if (objective.check) {
+          console.log({ objective });
+          if (timesResolved[i]) return timesResolved[i];
+
+          return msToTime(Date.now() - startTime);
+        }
+        return timesResolved[i] ? timesResolved[i] : undefined;
+      });
+
+      setTimesResolved(all);
+    }
+  }, [blocks, cubeIsSolved, startTime, timesResolved]);
+*/
   return (
     <div className="Missions">
       <StopWatch {...stopWatchProps} />
       <ul className="objectives">
-        {objectives.map(({ text, check }) => (
+        {objectives.map(({ text, check }, i) => (
           <li
             key={text}
             className={check ? "objective objective--complete" : "objective"}
-          >{`${text}: ${check ? "YES" : "NO"}`}</li>
+          >
+            {`${text}: ${check ? "YES" : "NO"}`}
+            {timesResolved[i] && (
+              <span className="time">{timesResolved[i]}</span>
+            )}
+          </li>
         ))}
       </ul>
+      <div className="Missions__moves">
+        {moveHistory && (
+          <React.Fragment>
+            {moveHistory.length} moves
+            <div>{moveHistory.join("\r\n")}</div>
+          </React.Fragment>
+        )}
+      </div>
     </div>
   );
 };
