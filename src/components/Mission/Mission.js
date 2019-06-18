@@ -58,7 +58,6 @@ const Mission = () => {
   // Set up state for stopwatch
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
-  const stopWatchProps = { startTime, setStartTime, endTime, setEndTime };
 
   // if solved, stop timer
   useEffect(() => {
@@ -69,15 +68,48 @@ const Mission = () => {
     }
   }, [cubeIsSolved, endTime, setEndTime, startTime]);
 
+  // Update solved times
+  const [solvedTimes, setSolvedTimes] = useState(
+    Array.apply(null, Array(objectives.length))
+  );
+  const newSolvedTimes = [...solvedTimes];
+  let solvedTimesNeedsUpdate = false;
+  objectives.map(({ check }, i) => {
+    if (check && !solvedTimes[i]) {
+      newSolvedTimes[i] = msToTime(new Date() - startTime);
+      solvedTimesNeedsUpdate = true;
+    }
+  });
+  useEffect(() => {
+    if (solvedTimesNeedsUpdate) {
+      setSolvedTimes(newSolvedTimes);
+    }
+  }, [solvedTimesNeedsUpdate, newSolvedTimes]);
+
+  const resetObjectives = () => {
+    setSolvedTimes(Array.apply(null, Array(objectives.length)));
+  };
+  const stopWatchProps = {
+    startTime,
+    setStartTime,
+    endTime,
+    setEndTime,
+    resetObjectives
+  };
+
   return (
     <div className="Missions">
       <StopWatch {...stopWatchProps} />
       <ul className="objectives">
-        {objectives.map(({ text, check }) => (
+        {objectives.map(({ text, check }, i) => (
           <li
             key={text}
             className={check ? "objective objective--complete" : "objective"}
-          >{`${text}: ${check ? "YES" : "NO"}`}</li>
+          >
+            {`${text}: ${check ? "YES" : "NO"}: `}
+            {` ${solvedTimes[i] || "--"}`}
+            <br />
+          </li>
         ))}
       </ul>
     </div>
@@ -85,7 +117,7 @@ const Mission = () => {
 };
 
 const StopWatch = React.memo(
-  ({ startTime, setStartTime, endTime, setEndTime }) => {
+  ({ startTime, setStartTime, endTime, setEndTime, resetObjectives }) => {
     const [date, setDate] = useState(new Date());
 
     useEffect(() => {
@@ -107,6 +139,7 @@ const StopWatch = React.memo(
       stopWatchFunction = () => {
         setStartTime(null);
         setEndTime(null);
+        resetObjectives();
       };
     } else {
       if (startTime && date) {
@@ -124,6 +157,7 @@ const StopWatch = React.memo(
         stopWatchFunction = () => {
           setEndTime(null);
           setStartTime(Date.now());
+          resetObjectives();
         };
       }
     }
