@@ -13,17 +13,31 @@ const DEFAULT_BLOCKS = getInitialBlocks();
 // const DEFAULT_BLOCKS = stringStateToCubeState(
 //   "FULUUUBUURRURRRRRRRFFFFFFFFDDDDDDDDDLLULLLLLLBBUBBBBBB"
 // );
+
+function blockReducer(state, action) {
+  if (action.type === "SET_BLOCKS") {
+    return { ...state, blocks: action.value };
+  }
+  return state;
+}
+
 function CubeProvider(props) {
-  const [blocks, setBlocks] = React.useState(DEFAULT_BLOCKS);
+  const [blocksState, blocksDispatch] = React.useReducer(blockReducer, {
+    blocks: DEFAULT_BLOCKS
+  });
+
   const [animatingBlocks, setAnimatingBlocks] = React.useState(null);
   const value = React.useMemo(() => {
     return {
-      blocks,
-      setBlocks,
+      blocks: blocksState.blocks,
+      setBlocks: newBlocks => {
+        blocksDispatch({ type: "SET_BLOCKS", value: newBlocks });
+      },
       animatingBlocks,
       setAnimatingBlocks
     };
-  }, [blocks, animatingBlocks]);
+  }, [blocksState, animatingBlocks]);
+
   return <CubeContext.Provider value={value} {...props} />;
 }
 
@@ -36,47 +50,65 @@ function useCube() {
   const { blocks, setBlocks, animatingBlocks, setAnimatingBlocks } = context;
   // TODO: allow control of this
   const animationSpeed = 120;
+  /**
+   * Clear any existing animation timeouts
+   */
+  const clearTimeout = () => {
+    if (timeout && timeout.current) {
+      clearTimeout(timeout.current);
+      timeout.current = null;
+    }
+  };
+
+  const cancelAnimation = () => {
+    setAnimatingBlocks(null);
+    timeout.current = null;
+  };
+
   return {
     blocks: animatingBlocks ? animatingBlocks : blocks,
     animationSpeed: animatingBlocks ? animationSpeed : 0,
+    /**
+     * Applies turnString to the cube; first we set a CSS animation and then an actual mutation on the blocks
+     * @param {string} turnString the move notation to apply to the cube
+     */
     turnCube: turnString => {
-      if (timeout && timeout.current) {
-        clearTimeout(timeout.current);
-        timeout.current = null;
-      }
+      // clear any previous animation timeouts
+      clearTimeout();
+
+      // set up the animation
       setAnimatingBlocks(applyRotationAnimationToCube(turnString, blocks));
+      // set up the actual block mutation
       setBlocks(applyTurnToCube(turnString, blocks));
-      timeout.current = setTimeout(() => {
-        setAnimatingBlocks(null);
-        timeout.current = null;
-      }, animationSpeed);
+      // after the turn is completed, remove the animation
+      timeout.current = setTimeout(cancelAnimation, animationSpeed);
     },
+    /**
+     * Applies turnString to cube for animation purposes ONLY, and then replaces the cube state with the given cubeState
+     */
     setCubeState: (cubeState, turnString) => {
-      if (timeout && timeout.current) {
-        clearTimeout(timeout.current);
-        timeout.current = null;
-      }
+      clearTimeout();
+
+      // perform animation
       if (turnString) {
         setAnimatingBlocks(applyRotationAnimationToCube(turnString, blocks));
-        timeout.current = setTimeout(() => {
-          setAnimatingBlocks(null);
-          timeout.current = null;
-        }, animationSpeed);
+        timeout.current = setTimeout(cancelAnimation, animationSpeed);
       }
+      // set the state
       setBlocks(cubeState);
     },
+    /**
+     * Randomizes the cube state
+     */
     randomizeCube: () => {
-      if (timeout && timeout.current) {
-        clearTimeout(timeout.current);
-        timeout.current = null;
-      }
+      clearTimeout();
       setBlocks(createScrambledCube());
     },
+    /**
+     * Resets the cube state to the default state
+     */
     resetCube: () => {
-      if (timeout && timeout.current) {
-        clearTimeout(timeout.current);
-        timeout.current = null;
-      }
+      clearTimeout();
       setBlocks([...DEFAULT_BLOCKS]);
     }
   };
