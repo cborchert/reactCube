@@ -53,7 +53,7 @@ function useCube() {
   /**
    * Clear any existing animation timeouts
    */
-  const clearTimeout = () => {
+  const clearAnimationTimeout = () => {
     if (timeout && timeout.current) {
       clearTimeout(timeout.current);
       timeout.current = null;
@@ -74,7 +74,7 @@ function useCube() {
      */
     turnCube: turnString => {
       // clear any previous animation timeouts
-      clearTimeout();
+      clearAnimationTimeout();
 
       // set up the animation
       setAnimatingBlocks(applyRotationAnimationToCube(turnString, blocks));
@@ -87,7 +87,7 @@ function useCube() {
      * Applies turnString to cube for animation purposes ONLY, and then replaces the cube state with the given cubeState
      */
     setCubeState: (cubeState, turnString) => {
-      clearTimeout();
+      clearAnimationTimeout();
 
       // perform animation
       if (turnString) {
@@ -101,14 +101,14 @@ function useCube() {
      * Randomizes the cube state
      */
     randomizeCube: () => {
-      clearTimeout();
+      clearAnimationTimeout();
       setBlocks(createScrambledCube());
     },
     /**
      * Resets the cube state to the default state
      */
     resetCube: () => {
-      clearTimeout();
+      clearAnimationTimeout();
       setBlocks([...DEFAULT_BLOCKS]);
     }
   };
