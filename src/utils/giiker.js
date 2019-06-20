@@ -397,6 +397,8 @@ class Giiker extends EventEmitter {
       case -2:
         notation = `${face}2'`;
         break;
+      default:
+        break;
     }
 
     return { face, amount, notation };
@@ -431,6 +433,8 @@ class Giiker extends EventEmitter {
         actualColors[0] = colors[0];
         actualColors[1] = colors[1];
         actualColors[2] = colors[2];
+        break;
+      default:
         break;
     }
 

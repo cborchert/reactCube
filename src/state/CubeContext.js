@@ -3,8 +3,7 @@ import {
   applyTurnToCube,
   applyRotationAnimationToCube,
   getInitialBlocks,
-  createScrambledCube,
-  stringStateToCubeState
+  createScrambledCube
 } from "../utils/cubeUtils.js";
 import { Giiker } from "../utils/giiker.js";
 
@@ -28,8 +27,7 @@ function CubeProvider(props) {
     blocks: DEFAULT_BLOCKS
   });
   const [animatingBlocks, setAnimatingBlocks] = React.useState(null);
-
-  // memoize the context value for performance
+  const [moveHistory, setMoveHistory] = React.useState([]);
   const value = React.useMemo(() => {
     return {
       blocks: blocksState.blocks,
@@ -37,10 +35,11 @@ function CubeProvider(props) {
         blocksDispatch({ type: "SET_BLOCKS", value: newBlocks });
       },
       animatingBlocks,
-      setAnimatingBlocks
+      setAnimatingBlocks,
+      moveHistory,
+      setMoveHistory
     };
-  }, [blocksState, animatingBlocks]);
-
+  }, [blocksState, animatingBlocks, moveHistory]);
   return <CubeContext.Provider value={value} {...props} />;
 }
 
@@ -49,8 +48,15 @@ function useCube() {
   if (!context) {
     throw new Error("useCube must be used within a CubeProvider");
   }
-  const { blocks, setBlocks, animatingBlocks, setAnimatingBlocks } = context;
-
+  const {
+    blocks,
+    setBlocks,
+    animatingBlocks,
+    setAnimatingBlocks,
+    moveHistory,
+    setMoveHistory
+  } = context;
+  
   // Set up the animation timing
   const timeout = React.useRef(null);
   // TODO: allow control of this
@@ -161,6 +167,11 @@ function useCube() {
   return {
     blocks: animatingBlocks ? animatingBlocks : blocks,
     animationSpeed: animatingBlocks ? animationSpeed : 0,
+    moveHistory: moveHistory,
+    setCubeHistory: move => {
+      moveHistory.push(move);
+      setMoveHistory(moveHistory);
+    },
     turnCube,
     setCubeState,
     randomizeCube,

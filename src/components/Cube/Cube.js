@@ -1,6 +1,6 @@
 import React from "react";
 import { useGesture } from "react-use-gesture";
-import { COLORS, cubeStateToStringState } from "../../utils/cubeUtils.js";
+import { COLORS } from "../../utils/cubeUtils.js";
 import { useCube } from "../../state/CubeContext.js";
 import { useScene } from "../../state/SceneContext.js";
 
@@ -26,7 +26,6 @@ const Cube = props => {
       stepX(-1 * dY);
     }
   });
-  // console.log(cubeStateToStringState(blocks));
   return (
     <div className="scene" {...bind()}>
       <div className="pivot" style={{ transform: sceneRotationCSS }}>
