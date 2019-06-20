@@ -15,7 +15,6 @@ function App() {
           <div className="App__controls">
             <Controls />
             <GiikerController />
-            <Mission />
           </div>
           <div className="App__cubeContainer">
             <Cube deleteTransparent={true} />

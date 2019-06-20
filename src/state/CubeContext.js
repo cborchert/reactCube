@@ -185,7 +185,9 @@ function useCube() {
     randomizeCube,
     resetCube,
     setConnectedDevice,
-    giiker: giiker.current
+    giiker: giiker.current,
+    setIsConnected,
+    isConnected
   };
 }
 

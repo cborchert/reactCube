@@ -19,7 +19,6 @@ $transparent: transparent;
   height: 100vh;
   perspective: $size * 50;
   overflow: hidden;
-  border: 2px solid red;
 
   &,
   & div {
@@ -37,17 +36,17 @@ $transparent: transparent;
   //demo only: planes and points
   // background: rgba(0, 0, 255, 0.5);
   // centered dot
-  &:before {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    content: " ";
-    width: 20px;
-    height: 20px;
-    background: red;
-    border-radius: 20px;
-  }
+  // &:before {
+  //   position: absolute;
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translateX(-50%) translateY(-50%);
+  //   content: " ";
+  //   width: 20px;
+  //   height: 20px;
+  //   background: red;
+  //   border-radius: 20px;
+  // }
   // demo only
   // animation: rotate 30s infinite linear;
   // transform-origin: center;

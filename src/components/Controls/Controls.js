@@ -81,36 +81,37 @@ const Controls = () => {
     };
   }, [stepX, stepY, toCenter, turnCube]);
 
-  return (
-    <div className="Controls">
-      <div>
-        <div>Cube Movements</div>
-        {MOVES.map(move => (
-          <button
-            key={move}
-            onClick={() => {
-              turnCube(move);
-            }}
-          >
-            {MOVE_TO_KEY_MAP[move] ? `[${MOVE_TO_KEY_MAP[move]}] ` : ""}
-            {move}
-          </button>
-        ))}
-        <button onClick={resetCube}>resetCube</button>
-        <button onClick={randomizeCube}>randomizeCube</button>
-      </div>
-      <div>
-        <div>Rotation</div>
-        <button onClick={() => stepX(45)}>X+</button>
-        <button onClick={() => stepX(-45)}>X-</button>
-        <button onClick={() => stepY(45)}>Y+</button>
-        <button onClick={() => stepY(-45)}>Y-</button>
-        <button onClick={() => stepZ(45)}>Z+</button>
-        <button onClick={() => stepZ(-45)}>Z-</button>
-        <button onClick={toCenter}>Snap To Center</button>
-      </div>
-    </div>
-  );
+  // return (
+  //   <div className="Controls">
+  //     <div>
+  //       <div>Cube Movements</div>
+  //       {MOVES.map(move => (
+  //         <button
+  //           key={move}
+  //           onClick={() => {
+  //             turnCube(move);
+  //           }}
+  //         >
+  //           {MOVE_TO_KEY_MAP[move] ? `[${MOVE_TO_KEY_MAP[move]}] ` : ""}
+  //           {move}
+  //         </button>
+  //       ))}
+  //       <button onClick={resetCube}>resetCube</button>
+  //       <button onClick={randomizeCube}>randomizeCube</button>
+  //     </div>
+  //     <div>
+  //       <div>Rotation</div>
+  //       <button onClick={() => stepX(45)}>X+</button>
+  //       <button onClick={() => stepX(-45)}>X-</button>
+  //       <button onClick={() => stepY(45)}>Y+</button>
+  //       <button onClick={() => stepY(-45)}>Y-</button>
+  //       <button onClick={() => stepZ(45)}>Z+</button>
+  //       <button onClick={() => stepZ(-45)}>Z-</button>
+  //       <button onClick={toCenter}>Snap To Center</button>
+  //     </div>
+  //   </div>
+  // );
+  return null;
 };
 
 export default Controls;
