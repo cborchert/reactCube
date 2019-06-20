@@ -3,7 +3,8 @@ import {
   applyTurnToCube,
   applyRotationAnimationToCube,
   getInitialBlocks,
-  createScrambledCube
+  createScrambledCube,
+  stringStateToCubeState
 } from "../utils/cubeUtils.js";
 import { Giiker } from "../utils/giiker.js";
 
@@ -56,7 +57,7 @@ function useCube() {
     moveHistory,
     setMoveHistory
   } = context;
-  
+
   // Set up the animation timing
   const timeout = React.useRef(null);
   // TODO: allow control of this
@@ -80,6 +81,15 @@ function useCube() {
 
   // The functions
   /**
+   * Updates the cubeHistory
+   * @param {String} move
+   */
+  const setCubeHistory = turnString => {
+    moveHistory.push(turnString);
+    setMoveHistory(moveHistory);
+  };
+
+  /**
    * Applies turnString to the cube; first we set a CSS animation and then an actual mutation on the blocks
    * @param {string} turnString the move notation to apply to the cube
    */
@@ -92,6 +102,7 @@ function useCube() {
     setBlocks(applyTurnToCube(turnString, blocks));
     // after the turn is completed, remove the animation
     timeout.current = setTimeout(cancelAnimation, animationSpeed);
+    setCubeHistory(turnString);
   };
 
   /**
@@ -168,10 +179,7 @@ function useCube() {
     blocks: animatingBlocks ? animatingBlocks : blocks,
     animationSpeed: animatingBlocks ? animationSpeed : 0,
     moveHistory: moveHistory,
-    setCubeHistory: move => {
-      moveHistory.push(move);
-      setMoveHistory(moveHistory);
-    },
+    setCubeHistory,
     turnCube,
     setCubeState,
     randomizeCube,
