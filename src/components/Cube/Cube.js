@@ -10,6 +10,7 @@ const Cube = props => {
   const { blocks, animationSpeed, turnCube } = useCube();
   const { sceneRotationCSS, stepX, stepY, rotateX } = useScene();
   const { deleteTransparent } = props;
+  // TODO: Perf is this being debounced ??
   const bind = useGesture({
     onDrag: ({ xy: [x1, y1], previous: [x0, y0] }) => {
       const dX = x1 - x0;
