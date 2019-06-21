@@ -395,16 +395,35 @@ export function isPLL() {}
 //check is F2L and opposite is corner solved (not cross)
 export function isOLL() {}
 
+/**
+ * Creates random array of scramble steps
+ * @param {Number} length
+ * @return {Array} of scramble step strings
+ */
+//TODO: Needs TESTS
 export function createScrambleSteps(length = 20) {
   const possibleMoves = ["U", "D", "L", "R", "B", "F"];
   const scrambleSteps = [];
-  for (let i = 0; i < length; i++) {
+  let lastMove = "";
+  let secondToLastMove = "";
+  while (scrambleSteps.length < length) {
     const move =
       possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-    // TODO: Our move cannot be in the inverse of a previous move
-    // TODO: We cannot repeat the same move more than two times
-    const suffix = Math.random() > 0.5 ? "'" : "";
-    scrambleSteps.push(move + suffix);
+    let suffix = Math.random() > 0.5 ? "'" : "";
+    let currentMove = move + suffix;
+    // Our move cannot be in the inverse of a previous move
+    // if it is, change the current move
+    if (lastMove[0] === currentMove[0] && lastMove !== currentMove) {
+      currentMove = lastMove;
+    }
+    // We cannot repeat the same move more than two times
+    if (currentMove === lastMove && currentMove === secondToLastMove) {
+      continue;
+    }
+    scrambleSteps.push(currentMove);
+    // update previous moves
+    secondToLastMove = lastMove;
+    lastMove = currentMove;
   }
   return scrambleSteps;
 }
