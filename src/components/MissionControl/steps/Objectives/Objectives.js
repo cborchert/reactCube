@@ -1,25 +1,53 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Objectives.scss";
 import { useCube } from "../../../../state/CubeContext.js";
+import { cubeStateToStringState } from "../../../../utils/cubeUtils.js";
 
 const ObjectivesStep = ({
   setStartTime,
   startTime,
   objectives,
-  objectiveTimes
+  objectiveTimes,
+  setMultipleObjectiveTimes
 }) => {
-  const { blocks } = useCube();
+  const { blocks, resetCubeHistory } = useCube();
 
-  // Initialize the timer
+  // Initialize the timer and reset cube history
   useEffect(() => {
     setStartTime(new Date());
+    resetCubeHistory();
     // only want component did mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const theObjectives = objectives.map((objective, i) => {
-    return { ...objective, complete: !!objectiveTimes[i] };
+    return { ...objective, complete: !!objectiveTimes[i], index: i };
   });
+  theObjectives.forEach(({ text, complete, check }) => {
+    console.table(text, complete, check(blocks));
+  });
+
+  // TODO: Checking movement in the cube should be custom
+  // Check if the user has moved the cube
+  const blockState = cubeStateToStringState(blocks);
+  // setting this to null forces the useEffect to be used the first time
+  const previousBlockState = useRef(null);
+  useEffect(() => {
+    if (blockState !== previousBlockState.current) {
+      previousBlockState.current = blockState;
+      // if the movement results in passed objectives, update
+      const theTime = new Date();
+      // only check those which are not complete, and get their indices
+      const newlyPassedIndices = theObjectives
+        .filter(({ complete }) => !complete)
+        .filter(({ check }) => check(blocks))
+        .map(({ index }, i) => index);
+      // add the new passed times
+      if (newlyPassedIndices.length > 0) {
+        setMultipleObjectiveTimes(newlyPassedIndices, theTime);
+      }
+    }
+  }, [blockState, blocks, setMultipleObjectiveTimes, theObjectives]);
 
   return (
     <React.Fragment>

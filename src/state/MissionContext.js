@@ -105,6 +105,22 @@ const missionReducer = (state, { type, payload }) => {
       endTime
     };
   }
+  if (type === "SET_MULTIPLE_OBJECTIVE_TIMES") {
+    const newObjectiveTimes = state.objectiveTimes.map((time, i) => {
+      if (payload.indices.includes(i)) {
+        return payload.time;
+      }
+      return time;
+    });
+    const didComplete = newObjectiveTimes.every(time => !!time);
+    const endTime = didComplete ? payload.time : null;
+    return {
+      ...state,
+      objectiveTimes: newObjectiveTimes,
+      didComplete,
+      endTime
+    };
+  }
   // default, do nothing
   return state;
 };
@@ -158,6 +174,12 @@ function useMission() {
     },
     setObjectiveTime: (index, time = new Date()) => {
       dispatch({ type: "SET_OBJECTIVE_TIME", payload: { index, time } });
+    },
+    setMultipleObjectiveTimes: (indices, time = new Date()) => {
+      dispatch({
+        type: "SET_MULTIPLE_OBJECTIVE_TIMES",
+        payload: { indices, time }
+      });
     }
   };
 }

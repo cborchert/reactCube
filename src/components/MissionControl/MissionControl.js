@@ -23,6 +23,7 @@ const MissionControl = () => {
     objectiveTimes,
     setStartTime,
     setObjectiveTime,
+    setMultipleObjectiveTimes,
     startTime
   } = useMission();
 
@@ -48,7 +49,7 @@ const MissionControl = () => {
     return (
       <Countdown
         canSkip={currentMission.canSkipCountdown}
-        onMove={fail}
+        onMove={initObjectivesStep}
         start={initObjectivesStep}
         countdownDuration={currentMission.countdown}
       />
@@ -62,6 +63,7 @@ const MissionControl = () => {
         startTime={startTime}
         setStartTime={setStartTime}
         setObjectiveTime={setObjectiveTime}
+        setMultipleObjectiveTimes={setMultipleObjectiveTimes}
       />
     );
   // otherwise return nothing

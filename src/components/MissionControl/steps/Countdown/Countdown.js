@@ -12,6 +12,7 @@ const Countdown = ({ start, onMove, canSkip, countdownDuration }) => {
   useEffect(() => {
     if (lastMoveTime !== previousMoveTime.current) {
       // if the user has moved, use the predefined callback
+      previousMoveTime.current = lastMoveTime;
       onMove();
     }
   }, [lastMoveTime, onMove]);

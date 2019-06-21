@@ -16,7 +16,7 @@ const cubeIsSolved = blocks => isSolved(blocks);
 const cubeCrosses = blocks => detectCrosses(blocks);
 const cubeFacesSolved = blocks => detectSolvedFaces(blocks);
 const bottomOfF2L = blocks => isF2L(blocks);
-const topColor = blocks => getOpposite(bottomOfF2L);
+const topColor = blocks => getOpposite(bottomOfF2L(blocks));
 const topFace = blocks => {
   const theTopColor = topColor(blocks);
   return theTopColor && getFaceBlocks(theTopColor, blocks);
@@ -69,7 +69,7 @@ const solveCube = {
         return bottomFace && bottomFace.length > 0;
       }
     },
-    { text: "top is plus", check: topIsPlus },
+    { text: "top is plus", check: blocks => topIsPlus(blocks) },
     { text: "top cross", check: topIsCross },
     { text: "top corners", check: topCornersInPosition },
     { text: "isOLL", check: isOll },

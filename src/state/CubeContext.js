@@ -88,6 +88,13 @@ function useCube() {
     moveHistory.push({ move: turnString, time: new Date() });
     setMoveHistory(moveHistory);
   };
+  /**
+   * Updates the cubeHistory
+   * @param {String} move
+   */
+  const resetCubeHistory = turnString => {
+    setMoveHistory([]);
+  };
 
   /**
    * Applies turnString to the cube; first we set a CSS animation and then an actual mutation on the blocks
@@ -180,6 +187,7 @@ function useCube() {
     animationSpeed: animatingBlocks ? animationSpeed : 0,
     moveHistory,
     setCubeHistory,
+    resetCubeHistory,
     turnCube,
     setCubeState,
     randomizeCube,
