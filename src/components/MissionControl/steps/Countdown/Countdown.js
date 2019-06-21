@@ -23,7 +23,7 @@ const Countdown = ({ start, onMove, canSkip, countdownDuration }) => {
     const tick = () => {
       setCurrentTime(new Date());
     };
-    const timerID = setInterval(() => tick(), 10);
+    const timerID = setInterval(() => tick(), 100);
     return () => {
       clearInterval(timerID);
     };
