@@ -2,6 +2,7 @@ import React from "react";
 import { useMission } from "../../state/MissionContext";
 import MissionStart from "./steps/MissionStart/MissionStart";
 import Scramble from "./steps/Scramble/Scramble";
+import Countdown from "./steps/Countdown/Countdown";
 
 const MissionControl = () => {
   const {
@@ -13,7 +14,11 @@ const MissionControl = () => {
     scrambleSteps,
     onScrambleStep,
     addScrambleStep,
-    nextScrambleStep
+    nextScrambleStep,
+    countdownComplete,
+    cancel,
+    fail,
+    initSolvingStep
   } = useMission();
 
   const currentMission = missions[selectedMissionIndex];
@@ -31,6 +36,16 @@ const MissionControl = () => {
         onScrambleStep={onScrambleStep}
         addScrambleStep={addScrambleStep}
         nextScrambleStep={nextScrambleStep}
+      />
+    );
+
+  if (currentMission.countdown && !countdownComplete)
+    return (
+      <Countdown
+        canSkip={currentMission.canSkipCountdown}
+        onMove={fail}
+        start={initSolvingStep}
+        countdownDuration={currentMission.countdown}
       />
     );
   // otherwise return nothing

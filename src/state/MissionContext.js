@@ -45,6 +45,7 @@ const missionReducer = (state, { type, payload }) => {
     };
     // }
   }
+  //TODO: create init scramble
   if (type === "ADD_SCRAMBLE_STEP") {
     // add payload to current position
     return {
@@ -73,6 +74,7 @@ const missionReducer = (state, { type, payload }) => {
       };
     }
   }
+  // TODO: Create initSolvingStep
   // default, do nothing
   return state;
 };
@@ -109,6 +111,18 @@ function useMission() {
     },
     addScrambleStep: notation => {
       dispatch({ type: "ADD_SCRAMBLE_STEP", payload: notation });
+    },
+    // TODO: Create cancel
+    cancel: () => {
+      dispatch({ type: "RESET" });
+    },
+    // TODO: Create fail
+    fail: () => {
+      dispatch({ type: "RESET" });
+    },
+    // TODO: Create initSolvingStep
+    initSolvingStep: () => {
+      dispatch({ type: "RESET" });
     }
   };
 }

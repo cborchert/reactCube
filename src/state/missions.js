@@ -1,3 +1,5 @@
+// TODO: Move file
+// TODO: Unit tests
 import {
   isSolved,
   detectCrosses,
@@ -42,6 +44,7 @@ const solveCube = {
   title: "Solve the Cube",
   scramble: true,
   countdown: 15,
+  canSkipCountdown: true,
   description: null,
   introHTML: null,
   objectives: [
