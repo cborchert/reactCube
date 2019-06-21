@@ -85,7 +85,7 @@ function useCube() {
    * @param {String} move
    */
   const setCubeHistory = turnString => {
-    moveHistory.push(turnString);
+    moveHistory.push({ move: turnString, time: new Date() });
     setMoveHistory(moveHistory);
   };
 
@@ -178,7 +178,7 @@ function useCube() {
   return {
     blocks: animatingBlocks ? animatingBlocks : blocks,
     animationSpeed: animatingBlocks ? animationSpeed : 0,
-    moveHistory: moveHistory,
+    moveHistory,
     setCubeHistory,
     turnCube,
     setCubeState,
