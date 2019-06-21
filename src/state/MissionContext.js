@@ -1,5 +1,6 @@
 import React from "react";
 import missions from "./missions";
+import { createScrambleSteps } from "../utils/missionUtils.js";
 
 const MissionContext = React.createContext();
 
@@ -31,7 +32,49 @@ const missionReducer = (state, { type, payload }) => {
       ...initialMissionState,
       selectedMissionIndex: state.selectedMissionIndex
     };
-  if (type === "START_MISSION") return { ...state, missionStarted: true };
+  if (type === "START_MISSION") {
+    //TODO: create custom scramble step if necessary
+    const { missions, selectedMissionIndex } = state;
+    const needsScramble = missions[selectedMissionIndex].scramble;
+    // TODO: handle multiple cases
+    // if(needsScramble){
+    return {
+      ...state,
+      missionStarted: true,
+      scrambleSteps: createScrambleSteps()
+    };
+    // }
+  }
+  //TODO: create init scramble
+  if (type === "ADD_SCRAMBLE_STEP") {
+    // add payload to current position
+    return {
+      ...state,
+      scrambleSteps: [
+        ...state.scrambleSteps.slice(0, state.onScrambleStep),
+        payload,
+        ...state.scrambleSteps.slice(state.onScrambleStep)
+      ]
+    };
+  }
+  if (type === "NEXT_SCRAMBLE_STEP") {
+    // advance scramble step
+    const nextScrambleStep = state.onScrambleStep + 1;
+    if (nextScrambleStep >= state.scrambleSteps.length) {
+      // if complete, set scrambleComplete to true
+      return {
+        ...state,
+        scrambleComplete: true
+      };
+    } else {
+      // update onScrambleStep
+      return {
+        ...state,
+        onScrambleStep: nextScrambleStep
+      };
+    }
+  }
+  // TODO: Create initSolvingStep
   // default, do nothing
   return state;
 };
@@ -62,6 +105,24 @@ function useMission() {
     ...context,
     startMission: () => {
       dispatch({ type: "START_MISSION" });
+    },
+    nextScrambleStep: () => {
+      dispatch({ type: "NEXT_SCRAMBLE_STEP" });
+    },
+    addScrambleStep: notation => {
+      dispatch({ type: "ADD_SCRAMBLE_STEP", payload: notation });
+    },
+    // TODO: Create cancel
+    cancel: () => {
+      dispatch({ type: "RESET" });
+    },
+    // TODO: Create fail
+    fail: () => {
+      dispatch({ type: "RESET" });
+    },
+    // TODO: Create initSolvingStep
+    initSolvingStep: () => {
+      dispatch({ type: "RESET" });
     }
   };
 }
