@@ -41,7 +41,7 @@ const missionReducer = (state, { type, payload }) => {
     return {
       ...state,
       missionStarted: true,
-      scrambleSteps: createScrambleSteps(1)
+      scrambleSteps: createScrambleSteps()
     };
     // }
   }
