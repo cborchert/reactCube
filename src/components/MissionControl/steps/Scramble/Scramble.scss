@@ -1,0 +1,35 @@
+.Scramble {
+  &__header,
+  &__footer {
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    padding: 10px 0;
+  }
+  &__header {
+    top: 0px;
+    h2 {
+      padding: 0 60px;
+      margin: 0;
+    }
+  }
+  &__footer {
+    bottom: 0px;
+    padding-bottom: 40px;
+  }
+  &__step {
+    font-size: 36px;
+    padding: 0 5px;
+    transition: 200ms;
+    &--current {
+      font-weight: bold;
+    }
+    &--past {
+      opacity: 0.5;
+    }
+    &--ancient {
+      font-size: 0;
+      padding: 0;
+    }
+  }
+}

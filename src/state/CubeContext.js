@@ -85,8 +85,15 @@ function useCube() {
    * @param {String} move
    */
   const setCubeHistory = turnString => {
-    moveHistory.push(turnString);
+    moveHistory.push({ move: turnString, time: new Date() });
     setMoveHistory(moveHistory);
+  };
+  /**
+   * Updates the cubeHistory
+   * @param {String} move
+   */
+  const resetCubeHistory = turnString => {
+    setMoveHistory([]);
   };
 
   /**
@@ -178,8 +185,9 @@ function useCube() {
   return {
     blocks: animatingBlocks ? animatingBlocks : blocks,
     animationSpeed: animatingBlocks ? animationSpeed : 0,
-    moveHistory: moveHistory,
+    moveHistory,
     setCubeHistory,
+    resetCubeHistory,
     turnCube,
     setCubeState,
     randomizeCube,
