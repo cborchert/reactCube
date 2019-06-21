@@ -12,6 +12,7 @@ const Countdown = ({ start, onMove, canSkip, countdownDuration }) => {
   useEffect(() => {
     if (lastMoveTime !== previousMoveTime.current) {
       // if the user has moved, use the predefined callback
+      previousMoveTime.current = lastMoveTime;
       onMove();
     }
   }, [lastMoveTime, onMove]);
@@ -23,7 +24,7 @@ const Countdown = ({ start, onMove, canSkip, countdownDuration }) => {
     const tick = () => {
       setCurrentTime(new Date());
     };
-    const timerID = setInterval(() => tick(), 10);
+    const timerID = setInterval(() => tick(), 100);
     return () => {
       clearInterval(timerID);
     };

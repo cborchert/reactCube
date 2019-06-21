@@ -3,6 +3,7 @@ import { useMission } from "../../state/MissionContext";
 import MissionStart from "./steps/MissionStart/MissionStart";
 import Scramble from "./steps/Scramble/Scramble";
 import Countdown from "./steps/Countdown/Countdown";
+import Objectives from "./steps/Objectives/Objectives";
 
 const MissionControl = () => {
   const {
@@ -16,9 +17,14 @@ const MissionControl = () => {
     addScrambleStep,
     nextScrambleStep,
     countdownComplete,
-    cancel,
     fail,
-    initSolvingStep
+    initObjectivesStep,
+    didComplete,
+    objectiveTimes,
+    setStartTime,
+    setObjectiveTime,
+    setMultipleObjectiveTimes,
+    startTime
   } = useMission();
 
   const currentMission = missions[selectedMissionIndex];
@@ -43,9 +49,21 @@ const MissionControl = () => {
     return (
       <Countdown
         canSkip={currentMission.canSkipCountdown}
-        onMove={fail}
-        start={initSolvingStep}
+        onMove={initObjectivesStep}
+        start={initObjectivesStep}
         countdownDuration={currentMission.countdown}
+      />
+    );
+
+  if (!didComplete)
+    return (
+      <Objectives
+        objectives={currentMission.objectives}
+        objectiveTimes={objectiveTimes}
+        startTime={startTime}
+        setStartTime={setStartTime}
+        setObjectiveTime={setObjectiveTime}
+        setMultipleObjectiveTimes={setMultipleObjectiveTimes}
       />
     );
   // otherwise return nothing

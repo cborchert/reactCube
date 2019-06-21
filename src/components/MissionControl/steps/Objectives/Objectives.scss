@@ -1,0 +1,54 @@
+.Objectives {
+  &__footer {
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    padding: 10px 0;
+  }
+  &__footer {
+    bottom: 0px;
+    padding-bottom: 40px;
+  }
+  &__stepper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    list-style: none;
+    text-align: left;
+    margin: 0 0 0 10px;
+    padding: 0;
+    &:before {
+      content: " ";
+      display: block;
+      height: 80px;
+      //TODO: use variable
+      border-left: 5px solid #7bed9f;
+    }
+  }
+  &__step {
+    position: relative;
+    padding: 10px 15px;
+    border-left: 5px solid #ff6b81;
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      border: 5px solid #ff6b81;
+      background: white;
+      transform: translateX(-12.5px) translateY(-50%);
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+    &--complete {
+      border-left: 5px solid #7bed9f;
+      &:before {
+        border: 5px solid #7bed9f;
+        background: #7bed9f;
+      }
+    }
+  }
+}

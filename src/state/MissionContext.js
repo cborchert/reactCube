@@ -41,7 +41,7 @@ const missionReducer = (state, { type, payload }) => {
     return {
       ...state,
       missionStarted: true,
-      scrambleSteps: createScrambleSteps()
+      scrambleSteps: createScrambleSteps(1)
     };
     // }
   }
@@ -74,7 +74,53 @@ const missionReducer = (state, { type, payload }) => {
       };
     }
   }
-  // TODO: Create initSolvingStep
+  if (type === "INIT_OBJECTIVES_STEP") {
+    const selectedMission = state.missions[state.selectedMissionIndex];
+    const emptyObjectiveTimes = Array.from({
+      length: selectedMission.objectives.length
+    }).map(() => null);
+    return {
+      ...state,
+      countdownComplete: true,
+      scrambleComplete: true,
+      objectiveTimes: emptyObjectiveTimes,
+      startTime: new Date(),
+      endTime: null,
+      didComplete: false
+    };
+  }
+  if (type === "SET_START_TIME") return { ...state, startTime: payload };
+  if (type === "SET_OBJECTIVE_TIME") {
+    const newObjectiveTimes = [
+      ...state.objectiveTimes.slice(0, payload.index),
+      payload.time,
+      ...state.objectiveTimes.slice(payload.index)
+    ];
+    const didComplete = newObjectiveTimes.every(time => !!time);
+    const endTime = didComplete ? payload.time : null;
+    return {
+      ...state,
+      objectiveTimes: newObjectiveTimes,
+      didComplete,
+      endTime
+    };
+  }
+  if (type === "SET_MULTIPLE_OBJECTIVE_TIMES") {
+    const newObjectiveTimes = state.objectiveTimes.map((time, i) => {
+      if (payload.indices.includes(i)) {
+        return payload.time;
+      }
+      return time;
+    });
+    const didComplete = newObjectiveTimes.every(time => !!time);
+    const endTime = didComplete ? payload.time : null;
+    return {
+      ...state,
+      objectiveTimes: newObjectiveTimes,
+      didComplete,
+      endTime
+    };
+  }
   // default, do nothing
   return state;
 };
@@ -120,9 +166,20 @@ function useMission() {
     fail: () => {
       dispatch({ type: "RESET" });
     },
-    // TODO: Create initSolvingStep
-    initSolvingStep: () => {
-      dispatch({ type: "RESET" });
+    initObjectivesStep: () => {
+      dispatch({ type: "INIT_OBJECTIVES_STEP" });
+    },
+    setStartTime: (time = new Date()) => {
+      dispatch({ type: "SET_START_TIME", payload: time });
+    },
+    setObjectiveTime: (index, time = new Date()) => {
+      dispatch({ type: "SET_OBJECTIVE_TIME", payload: { index, time } });
+    },
+    setMultipleObjectiveTimes: (indices, time = new Date()) => {
+      dispatch({
+        type: "SET_MULTIPLE_OBJECTIVE_TIMES",
+        payload: { indices, time }
+      });
     }
   };
 }
