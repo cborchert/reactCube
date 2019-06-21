@@ -158,6 +158,9 @@ function useMission() {
     addScrambleStep: notation => {
       dispatch({ type: "ADD_SCRAMBLE_STEP", payload: notation });
     },
+    reset: () => {
+      dispatch({ type: "RESET" });
+    },
     // TODO: Create cancel
     cancel: () => {
       dispatch({ type: "RESET" });

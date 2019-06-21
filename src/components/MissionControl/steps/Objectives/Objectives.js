@@ -23,9 +23,6 @@ const ObjectivesStep = ({
   const theObjectives = objectives.map((objective, i) => {
     return { ...objective, complete: !!objectiveTimes[i], index: i };
   });
-  theObjectives.forEach(({ text, complete, check }) => {
-    console.table(text, complete, check(blocks));
-  });
 
   // TODO: Checking movement in the cube should be custom
   // Check if the user has moved the cube
@@ -78,7 +75,7 @@ const msToTime = duration => {
     minutes = Math.floor(duration / (1000 * 60));
   return `${minutes > 0 ? `${normalize(minutes)}:` : ""}${normalize(
     seconds
-  )}:${normalize(milliseconds)}`;
+  )}.${normalize(milliseconds)}`;
 };
 
 // TODO: Optimize for perf, especially when dragging around the scene

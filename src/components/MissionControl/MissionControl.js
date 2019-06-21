@@ -4,6 +4,7 @@ import MissionStart from "./steps/MissionStart/MissionStart";
 import Scramble from "./steps/Scramble/Scramble";
 import Countdown from "./steps/Countdown/Countdown";
 import Objectives from "./steps/Objectives/Objectives";
+import Summary from "./steps/Summary/Summary";
 
 const MissionControl = () => {
   const {
@@ -17,19 +18,20 @@ const MissionControl = () => {
     addScrambleStep,
     nextScrambleStep,
     countdownComplete,
-    fail,
     initObjectivesStep,
     didComplete,
     objectiveTimes,
     setStartTime,
     setObjectiveTime,
     setMultipleObjectiveTimes,
-    startTime
+    startTime,
+    endTime,
+    reset
   } = useMission();
 
   const currentMission = missions[selectedMissionIndex];
   // check what step to render
-
+  // TODO: Check cancel and failures
   if (!missionStarted)
     return (
       <MissionStart title={currentMission.title} handleStart={startMission} />
@@ -66,6 +68,17 @@ const MissionControl = () => {
         setMultipleObjectiveTimes={setMultipleObjectiveTimes}
       />
     );
+
+  if (didComplete)
+    return (
+      <Summary
+        startTime={startTime}
+        endTime={endTime}
+        isSuccess
+        reset={reset}
+      />
+    );
+
   // otherwise return nothing
   return null;
 };
