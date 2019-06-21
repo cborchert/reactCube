@@ -19,7 +19,11 @@ const MissionControl = () => {
     countdownComplete,
     fail,
     initObjectivesStep,
-    didComplete
+    didComplete,
+    objectiveTimes,
+    setStartTime,
+    setObjectiveTime,
+    startTime
   } = useMission();
 
   const currentMission = missions[selectedMissionIndex];
@@ -53,11 +57,11 @@ const MissionControl = () => {
   if (!didComplete)
     return (
       <Objectives
-        objectives
-        objectiveTimes
-        startTime
-        setStartTime
-        setObjectiveTime
+        objectives={currentMission.objectives}
+        objectiveTimes={objectiveTimes}
+        startTime={startTime}
+        setStartTime={setStartTime}
+        setObjectiveTime={setObjectiveTime}
       />
     );
   // otherwise return nothing
