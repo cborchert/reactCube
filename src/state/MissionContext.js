@@ -74,7 +74,21 @@ const missionReducer = (state, { type, payload }) => {
       };
     }
   }
-  // TODO: Create initSolvingStep
+  if (type === "INIT_OBJECTIVES_STEP") {
+    const selectedMission = state.missions[state.selectedMissionIndex];
+    const emptyObjectiveTimes = Array.from({
+      length: selectedMission.objectives.length
+    }).map(() => null);
+    return {
+      ...state,
+      countdownComplete: true,
+      scrambleComplete: true,
+      objectiveTimes: emptyObjectiveTimes,
+      startTime: new Date(),
+      endTime: null,
+      didComplete: false
+    };
+  }
   // default, do nothing
   return state;
 };
@@ -120,9 +134,8 @@ function useMission() {
     fail: () => {
       dispatch({ type: "RESET" });
     },
-    // TODO: Create initSolvingStep
-    initSolvingStep: () => {
-      dispatch({ type: "RESET" });
+    initObjectivesStep: () => {
+      dispatch({ type: "INIT_OBJECTIVES_STEP" });
     }
   };
 }

@@ -3,6 +3,7 @@ import { useMission } from "../../state/MissionContext";
 import MissionStart from "./steps/MissionStart/MissionStart";
 import Scramble from "./steps/Scramble/Scramble";
 import Countdown from "./steps/Countdown/Countdown";
+import Objectives from "./steps/Objectives/Objectives";
 
 const MissionControl = () => {
   const {
@@ -16,9 +17,9 @@ const MissionControl = () => {
     addScrambleStep,
     nextScrambleStep,
     countdownComplete,
-    cancel,
     fail,
-    initSolvingStep
+    initObjectivesStep,
+    didComplete
   } = useMission();
 
   const currentMission = missions[selectedMissionIndex];
@@ -44,8 +45,19 @@ const MissionControl = () => {
       <Countdown
         canSkip={currentMission.canSkipCountdown}
         onMove={fail}
-        start={initSolvingStep}
+        start={initObjectivesStep}
         countdownDuration={currentMission.countdown}
+      />
+    );
+
+  if (!didComplete)
+    return (
+      <Objectives
+        objectives
+        objectiveTimes
+        startTime
+        setStartTime
+        setObjectiveTime
       />
     );
   // otherwise return nothing
