@@ -10,7 +10,7 @@ import {
   areCornersInPosition,
   isFaceSingleColor
 } from "../utils/missionUtils";
-import { getFaceBlocks } from "../utils/cubeUtils";
+import { getFaceBlocks, stringStateToCubeState } from "../utils/cubeUtils";
 
 const cubeIsSolved = blocks => isSolved(blocks);
 const cubeCrosses = blocks => detectCrosses(blocks);
@@ -36,8 +36,7 @@ const topCornersInPosition = blocks => {
 };
 const isOll = blocks => {
   const theTopFace = topFace(blocks);
-  const areTopCornersInPosition = topCornersInPosition(blocks);
-  return areTopCornersInPosition && isFaceSingleColor(theTopFace);
+  return theTopFace && isFaceSingleColor(theTopFace);
 };
 
 const solveCube = {
@@ -77,4 +76,74 @@ const solveCube = {
   ]
 };
 
-export default [solveCube];
+const solveOLL = {
+  title: "Complete the OLL Case",
+  countdown: 0,
+  canSkipCountdown: true,
+  description: null,
+  introHTML: null,
+  isTraining: true,
+  objectives: [
+    {
+      text: "Antisune",
+      /**
+       * At beginning of this objective, the following function will be called to set the blocks on the cube
+       */
+      setBlocks: () =>
+        stringStateToCubeState(
+          "RUFUUUBUUFRRRRRRRRULLFFFFFFDDDDDDDDDUFLLLLLLLUBBBBBBBB"
+        ),
+      check: (blocks, title) => title === "Antisune" && isOll(blocks)
+    },
+    {
+      text: "Sune",
+      setBlocks: () =>
+        stringStateToCubeState(
+          "BURUUUUUFLBURRRRRRLLUFFFFFFDDDDDDDDDRRBLLLLLLFFUBBBBBB"
+        ),
+      check: (blocks, title) => title === "Sune" && isOll(blocks)
+    },
+    {
+      text: "Double Sune",
+      setBlocks: () =>
+        stringStateToCubeState(
+          "BUBUUUFUFLRLRRRRRRUFUFFFFFFDDDDDDDDDRLRLLLLLLUBUBBBBBB"
+        ),
+      check: (blocks, title) => title === "Double Sune" && isOll(blocks)
+    },
+    {
+      text: "Pi",
+      setBlocks: () =>
+        stringStateToCubeState(
+          "FULUUUBULBFFRRRRRRRRUFFFFFFDDDDDDDDDUBULLLLLLULRBBBBBB"
+        ),
+      check: (blocks, title) => title === "Pi" && isOll(blocks)
+    },
+    {
+      text: "Bowtie",
+      setBlocks: () =>
+        stringStateToCubeState(
+          "BUUUUUUUBRLLRRRRRRRBUFFFFFFDDDDDDDDDURFLLLLLLFFLBBBBBB"
+        ),
+      check: (blocks, title) => title === "Bowtie" && isOll(blocks)
+    },
+    {
+      text: "Chameleon",
+      setBlocks: () =>
+        stringStateToCubeState(
+          "LUUUUUFUUBLLRRRRRRUBRFFFFFFDDDDDDDDDBRRLLLLLLFFUBBBBBB"
+        ),
+      check: (blocks, title) => title === "Chameleon" && isOll(blocks)
+    },
+    {
+      text: "Headlights",
+      setBlocks: () =>
+        stringStateToCubeState(
+          "BUBUUUUUUFRLRRRRRRRFLFFFFFFDDDDDDDDDRLFLLLLLLUBUBBBBBB"
+        ),
+      check: (blocks, title) => title === "Headlights" && isOll(blocks)
+    }
+  ]
+};
+
+export default [solveCube, solveOLL];
