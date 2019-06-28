@@ -4,7 +4,8 @@ import {
   applyRotationAnimationToCube,
   getInitialBlocks,
   createScrambledCube,
-  stringStateToCubeState
+  stringStateToCubeState,
+  cubeStateToStringState
 } from "../utils/cubeUtils.js";
 import { Giiker } from "../utils/giiker.js";
 
@@ -58,6 +59,7 @@ function useCube() {
     setMoveHistory
   } = context;
 
+  // console.log(cubeStateToStringState(blocks));
   // Set up the animation timing
   const timeout = React.useRef(null);
   // TODO: allow control of this

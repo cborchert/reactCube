@@ -60,6 +60,7 @@ const MissionControl = () => {
   if (!didComplete)
     return (
       <Objectives
+        initObjectivesStep={initObjectivesStep}
         objectives={currentMission.objectives}
         objectiveTimes={objectiveTimes}
         startTime={startTime}
