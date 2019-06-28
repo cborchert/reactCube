@@ -1,0 +1,18 @@
+.CloseButton {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  opacity: 0.6;
+  font-size: 24px;
+  color: black;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  opacity: 1;
+  transition: 200ms;
+  z-index: 4;
+  &:hover {
+    transform: rotateZ(90deg);
+    cursor: pointer;
+  }
+}

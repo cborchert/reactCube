@@ -6,7 +6,7 @@ const MissionContext = React.createContext();
 
 const initialMissionState = {
   missions,
-  selectedMissionIndex: 1,
+  selectedMissionIndex: 0,
   scrambleSteps: [],
   onScrambleStep: 0,
   objectiveTimes: [],

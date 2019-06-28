@@ -5,6 +5,7 @@ import Scramble from "./steps/Scramble/Scramble";
 import Countdown from "./steps/Countdown/Countdown";
 import Objectives from "./steps/Objectives/Objectives";
 import Summary from "./steps/Summary/Summary";
+import CloseButton from "./CloseButton/CloseButton";
 
 const MissionControl = () => {
   const {
@@ -30,15 +31,19 @@ const MissionControl = () => {
   } = useMission();
 
   const currentMission = missions[selectedMissionIndex];
+
+  let MissionScreen = null;
+  let CancelButton = <CloseButton close={reset} />;
+
   // check what step to render
   // TODO: Check cancel and failures
-  if (!missionStarted)
-    return (
+  if (!missionStarted) {
+    CancelButton = null;
+    MissionScreen = (
       <MissionStart title={currentMission.title} handleStart={startMission} />
     );
-
-  if (currentMission.scramble && !scrambleComplete)
-    return (
+  } else if (currentMission.scramble && !scrambleComplete)
+    MissionScreen = (
       <Scramble
         scrambleSteps={scrambleSteps}
         onScrambleStep={onScrambleStep}
@@ -46,9 +51,8 @@ const MissionControl = () => {
         nextScrambleStep={nextScrambleStep}
       />
     );
-
-  if (currentMission.countdown && !countdownComplete)
-    return (
+  else if (currentMission.countdown && !countdownComplete)
+    MissionScreen = (
       <Countdown
         canSkip={currentMission.canSkipCountdown}
         onMove={initObjectivesStep}
@@ -56,9 +60,8 @@ const MissionControl = () => {
         countdownDuration={currentMission.countdown}
       />
     );
-
-  if (!didComplete)
-    return (
+  else if (!didComplete)
+    MissionScreen = (
       <Objectives
         initObjectivesStep={initObjectivesStep}
         objectives={currentMission.objectives}
@@ -69,9 +72,9 @@ const MissionControl = () => {
         setMultipleObjectiveTimes={setMultipleObjectiveTimes}
       />
     );
-
-  if (didComplete)
-    return (
+  else if (didComplete) {
+    CancelButton = null;
+    MissionScreen = (
       <Summary
         startTime={startTime}
         endTime={endTime}
@@ -79,9 +82,10 @@ const MissionControl = () => {
         reset={reset}
       />
     );
+  }
 
   // otherwise return nothing
-  return null;
+  return <React.Fragment>{[CancelButton, MissionScreen]}</React.Fragment>;
 };
 
 export default MissionControl;
