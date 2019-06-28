@@ -67,20 +67,20 @@ const getObjectives = ({ blocks }) => {
     {
       text: "bottom cross",
       check: cubeCrosses && cubeCrosses.length > 0
-    },
-    {
-      text: "bottom solved",
-      check: cubeFacesSolved && cubeFacesSolved.length > 0
-    },
-    {
-      text: "first 2 layers",
-      check: bottomOfF2L && bottomOfF2L.length > 0
-    },
-    { text: "top is plus", check: topIsPlus },
-    { text: "top cross", check: topIsCross },
-    { text: "top corners", check: topCornersInPosition },
-    { text: "isOLL", check: isOll },
-    { text: "solved", check: cubeIsSolved }
+    }
+    // {
+    //   text: "bottom solved",
+    //   check: cubeFacesSolved && cubeFacesSolved.length > 0
+    // },
+    // {
+    //   text: "first 2 layers",
+    //   check: bottomOfF2L && bottomOfF2L.length > 0
+    // },
+    // { text: "top is plus", check: topIsPlus },
+    // { text: "top cross", check: topIsCross },
+    // { text: "top corners", check: topCornersInPosition },
+    // { text: "isOLL", check: isOll },
+    // { text: "solved", check: cubeIsSolved }
   ];
 };
 

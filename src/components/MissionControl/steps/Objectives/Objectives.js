@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Objectives.scss";
 import { useCube } from "../../../../state/CubeContext.js";
 import { cubeStateToStringState } from "../../../../utils/cubeUtils.js";
+import "./Objectives.scss";
 
 const ObjectivesStep = ({
   setStartTime,
