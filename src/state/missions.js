@@ -38,6 +38,9 @@ const isOll = blocks => {
   const theTopFace = topFace(blocks);
   return theTopFace && isFaceSingleColor(theTopFace);
 };
+const isPll1 = blocks => {
+  return isOll(blocks) && topCornersInPosition(blocks);
+};
 
 const solveCube = {
   title: "Solve the Cube",
@@ -76,8 +79,8 @@ const solveCube = {
   ]
 };
 
-const solveOLL = {
-  title: "Complete the OLL Case",
+const solveOLLPLL = {
+  title: "Complete the OLL/PLL Case",
   countdown: 0,
   canSkipCountdown: true,
   description: null,
@@ -85,7 +88,7 @@ const solveOLL = {
   isTraining: true,
   objectives: [
     {
-      text: "Antisune",
+      text: "OLL: Antisune",
       /**
        * At beginning of this objective, the following function will be called to set the blocks on the cube
        */
@@ -93,57 +96,108 @@ const solveOLL = {
         stringStateToCubeState(
           "RUFUUUBUUFRRRRRRRRULLFFFFFFDDDDDDDDDUFLLLLLLLUBBBBBBBB"
         ),
-      check: (blocks, title) => title === "Antisune" && isOll(blocks)
+      check: (blocks, title) =>
+        title === "OLL: Antisune" && cubeIsSolved(blocks)
     },
     {
-      text: "Sune",
+      text: "OLL: Sune",
       setBlocks: () =>
         stringStateToCubeState(
           "BURUUUUUFLBURRRRRRLLUFFFFFFDDDDDDDDDRRBLLLLLLFFUBBBBBB"
         ),
-      check: (blocks, title) => title === "Sune" && isOll(blocks)
+      check: (blocks, title) => title === "OLL: Sune" && isOll(blocks)
     },
     {
-      text: "Double Sune",
+      text: "OLL: Double Sune",
       setBlocks: () =>
         stringStateToCubeState(
           "BUBUUUFUFLRLRRRRRRUFUFFFFFFDDDDDDDDDRLRLLLLLLUBUBBBBBB"
         ),
-      check: (blocks, title) => title === "Double Sune" && isOll(blocks)
+      check: (blocks, title) => title === "OLL: Double Sune" && isOll(blocks)
     },
     {
-      text: "Pi",
+      text: "OLL: Pi",
       setBlocks: () =>
         stringStateToCubeState(
           "FULUUUBULBFFRRRRRRRRUFFFFFFDDDDDDDDDUBULLLLLLULRBBBBBB"
         ),
-      check: (blocks, title) => title === "Pi" && isOll(blocks)
+      check: (blocks, title) => title === "OLL: Pi" && isOll(blocks)
     },
     {
-      text: "Bowtie",
+      text: "OLL: Bowtie",
       setBlocks: () =>
         stringStateToCubeState(
           "BUUUUUUUBRLLRRRRRRRBUFFFFFFDDDDDDDDDURFLLLLLLFFLBBBBBB"
         ),
-      check: (blocks, title) => title === "Bowtie" && isOll(blocks)
+      check: (blocks, title) => title === "OLL: Bowtie" && isOll(blocks)
     },
     {
-      text: "Chameleon",
+      text: "OLL: Chameleon",
       setBlocks: () =>
         stringStateToCubeState(
           "LUUUUUFUUBLLRRRRRRUBRFFFFFFDDDDDDDDDBRRLLLLLLFFUBBBBBB"
         ),
-      check: (blocks, title) => title === "Chameleon" && isOll(blocks)
+      check: (blocks, title) => title === "OLL: Chameleon" && isOll(blocks)
     },
     {
-      text: "Headlights",
+      text: "OLL: Headlights",
       setBlocks: () =>
         stringStateToCubeState(
           "BUBUUUUUUFRLRRRRRRRFLFFFFFFDDDDDDDDDRLFLLLLLLUBUBBBBBB"
         ),
-      check: (blocks, title) => title === "Headlights" && isOll(blocks)
+      check: (blocks, title) => title === "OLL: Headlights" && isOll(blocks)
+    },
+    {
+      text: "PLL1: T-Perm",
+      setBlocks: () =>
+        stringStateToCubeState(
+          "UUUUUUUUUBLFRRRRRRFFRFFFFFFDDDDDDDDDLRLLLLLLLRBBBBBBBB"
+        ),
+      check: (blocks, title) => title === "PLL1: T-Perm" && isPll1(blocks)
+    },
+    {
+      text: "PLL1: Y-Perm",
+      setBlocks: () =>
+        stringStateToCubeState(
+          "UUUUUUUUULRRRRRRRRFFBFFFFFFDDDDDDDDDRBLLLLLLLBLFBBBBBB"
+        ),
+      check: (blocks, title) => title === "PLL1: Y-Perm" && isPll1(blocks)
+    },
+    {
+      text: "PLL2: H-Perm",
+      setBlocks: () =>
+        stringStateToCubeState(
+          "UUUUUUUUURLRRRRRRRFBFFFFFFFDDDDDDDDDLRLLLLLLLBFBBBBBBB"
+        ),
+      check: (blocks, title) => title === "PLL2: H-Perm" && cubeIsSolved(blocks)
+    },
+    {
+      text: "PLL2: U-Perm A",
+      setBlocks: () =>
+        stringStateToCubeState(
+          "UUUUUUUUURLRRRRRRRFRFFFFFFFDDDDDDDDDLFLLLLLLLBBBBBBBBB"
+        ),
+      check: (blocks, title) =>
+        title === "PLL2: U-Perm A" && cubeIsSolved(blocks)
+    },
+    {
+      text: "PLL2: U-Perm B",
+      setBlocks: () =>
+        stringStateToCubeState(
+          "UUUUUUUUURRRRRRRRRFLFFFFFFFDDDDDDDDDLBLLLLLLLBFBBBBBBB"
+        ),
+      check: (blocks, title) =>
+        title === "PLL2: U-Perm B" && cubeIsSolved(blocks)
+    },
+    {
+      text: "PLL2: Z-Perm",
+      setBlocks: () =>
+        stringStateToCubeState(
+          "UUUUUUUUURBRRRRRRRFLFFFFFFFDDDDDDDDDLFLLLLLLLBRBBBBBBB"
+        ),
+      check: (blocks, title) => title === "PLL2: Z-Perm" && cubeIsSolved(blocks)
     }
   ]
 };
 
-export default [solveCube, solveOLL];
+export default [solveCube, solveOLLPLL];
