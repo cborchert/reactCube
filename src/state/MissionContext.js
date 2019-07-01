@@ -79,6 +79,7 @@ const missionReducer = (state, { type, payload }) => {
     const emptyObjectiveTimes = Array.from({
       length: selectedMission.objectives.length
     }).map(() => null);
+    // console.log(emptyObjectiveTimes);
     return {
       ...state,
       countdownComplete: true,
@@ -112,7 +113,9 @@ const missionReducer = (state, { type, payload }) => {
       }
       return time;
     });
-    const didComplete = newObjectiveTimes.every(time => !!time);
+    const didComplete =
+      newObjectiveTimes && newObjectiveTimes.every(time => !!time);
+    // console.log(didComplete);
     const endTime = didComplete ? payload.time : null;
     return {
       ...state,

@@ -188,9 +188,9 @@ class Giiker extends EventEmitter {
   }
 
   /**
-   * Returns a promise that will resolve to the battery level
+   * Sends a command and returns a returns a promise that will resolve to the returned information
    */
-  async getBatteryLevel() {
+  async writeCommand(byte) {
     const readCharacteristic = await this._systemService.getCharacteristic(
       SYSTEM_READ_UUID
     );
@@ -198,7 +198,7 @@ class Giiker extends EventEmitter {
       SYSTEM_WRITE_UUID
     );
     await readCharacteristic.startNotifications();
-    const data = new Uint8Array([0xb5]).buffer;
+    const data = new Uint8Array([byte]).buffer;
     writeCharacteristic.writeValue(data);
 
     return new Promise(resolve => {
@@ -216,6 +216,20 @@ class Giiker extends EventEmitter {
         listener
       );
     });
+  }
+
+  /**
+   * Returns a promise that will resolve to the battery level
+   */
+  getBatteryLevel() {
+    return this.writeCommand(0xb5);
+  }
+
+  /**
+   * Returns a promise that will resolve to the battery level
+   */
+  reset() {
+    return this.writeCommand(0xa1);
   }
 
   /**
