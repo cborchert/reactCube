@@ -15,6 +15,12 @@ const GiikerController = () => {
     await giiker.disconnect();
     setIsConnected(false);
   };
+  const getBatteryLevelGiiker = async () => {
+    console.log(await giiker.getBatteryLevel());
+  };
+  const reset = async () => {
+    console.log(await giiker.reset());
+  };
 
   return (
     <div
@@ -22,6 +28,8 @@ const GiikerController = () => {
         isConnected ? "connected" : "disconnected"
       }`}
     >
+      <button onClick={getBatteryLevelGiiker}>Log Battery Level</button>
+      <button onClick={reset}>Reset</button>
       {isConnected ? (
         <button onClick={disconnectGiiker} alt="disconnect giiker cube">
           giiker
